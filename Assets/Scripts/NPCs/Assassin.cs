@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mars.Tools;
 
 public class Assassin : Person
 {
@@ -32,10 +33,10 @@ public class Assassin : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == int.MinValue)
-            status = ACTIVE;
-        if (status == DEAD)
-            status = ACTIVE;
+        if (status == statusTypes.Undefined)
+            status = statusTypes.Active;
+        if (status == statusTypes.Dead)
+            status = statusTypes.Active;
         SetWaypoints();
         if (isIdleTarget)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
@@ -45,7 +46,7 @@ public class Assassin : Person
 
     public override void Sleep(bool forever)
     {
-        status = forever ? DEAD : ASLEEP;
+        status = forever ? statusTypes.Dead : statusTypes.Asleep;
         StopAllCoroutines();
         agent.SetDestination(gameObject.transform.position);
         animations.Stop();
@@ -53,7 +54,7 @@ public class Assassin : Person
 
     public override void WakeUp()
     {
-        status = ACTIVE;
+        status = statusTypes.Active;
         if (targetIndex == -1)
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
@@ -69,7 +70,7 @@ public class Assassin : Person
         Person[] NPCs = FindObjectsOfType<Person>();
         foreach (Person npc in NPCs)
         {
-            if (npc.gameObject != gameObject && npc.getStatus() == ACTIVE)
+            if (npc.gameObject != gameObject && npc.getStatus() == statusTypes.Active)
             {
                 wayPointTargets.Add(npc.gameObject);
                 wayPoints.Add(npc.gameObject.transform.position);
@@ -149,19 +150,19 @@ public class Assassin : Person
         {
             if (isIdleTarget)
             {
-                status = IDLE;
+                status = statusTypes.Idle;
                 animations.Play("Idle");
                 yield return new WaitForSeconds(2.5f);
             }
             else
-                status = ACTIVE;
+                status = statusTypes.Active;
             Incarnate();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Person>() && other.GetComponent<Person>().getStatus() == ACTIVE && status == ACTIVE && !caughtByPolice)
+        if (other.GetComponent<Person>() && other.GetComponent<Person>().getStatus() == statusTypes.Active && status == statusTypes.Active && !caughtByPolice)
             UseAbility(other.gameObject);
     }
     IEnumerator killTarget(GameObject target,bool reincarnate)
@@ -206,7 +207,7 @@ public class Assassin : Person
     public void SpottedByPolice()
     {
         gameObject.tag = "Imprisoned";
-        status = IMMUNE;
+        status = statusTypes.Immune;
         StopAllCoroutines();
         caughtByPolice = true;
         animations.Play("Talk");

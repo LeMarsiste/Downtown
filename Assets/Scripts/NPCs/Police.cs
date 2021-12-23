@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mars.Tools;
 
 public class Police : Person
 {
@@ -40,15 +41,15 @@ public class Police : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == int.MinValue)
-            status = IMMUNE;
+        if (status == statusTypes.Undefined)
+            status = statusTypes.Immune;
         SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
     }
 
     public override void Sleep(bool forever)
     {
-        status = forever ? DEAD : ASLEEP;
+        status = forever ? statusTypes.Dead : statusTypes.Asleep;
         animations.Stop();
         if (forever)
         {
@@ -62,7 +63,7 @@ public class Police : Person
 
     public override void WakeUp()
     {
-        status = IMMUNE;
+        status = statusTypes.Immune;
         if (targetIndex == -1)
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
@@ -75,7 +76,7 @@ public class Police : Person
     }
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == DEAD || status == ASLEEP)
+        if (status == statusTypes.Dead || status == statusTypes.Asleep)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
@@ -108,7 +109,7 @@ public class Police : Person
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
     {
-        if (target.GetComponent<Person>().getStatus() != ACTIVE && target.GetComponent<Person>().getStatus() != IDLE)
+        if (target.GetComponent<Person>().getStatus() != statusTypes.Active && target.GetComponent<Person>().getStatus() != statusTypes.Idle)
             return;
 
         StopAllCoroutines();
@@ -117,9 +118,9 @@ public class Police : Person
         animations.Play("Run");
         currentTarget = target;
 
-        if (target.GetComponent<Assassin>() && target.GetComponent<Assassin>().getStatus() != DEAD)
+        if (target.GetComponent<Assassin>() && target.GetComponent<Assassin>().getStatus() != statusTypes.Dead)
             target.GetComponent<Assassin>().SpottedByPolice();
-        else if (target.GetComponent<Theif>() && target.GetComponent<Theif>().getStatus() != DEAD)
+        else if (target.GetComponent<Theif>() && target.GetComponent<Theif>().getStatus() != statusTypes.Dead)
             target.GetComponent<Theif>().SpottedByPolice();
 
         StartCoroutine(arrestTheCriminal(target, reincarnate));

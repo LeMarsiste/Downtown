@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mars.Tools;
 
 public class Theif : Person
 {
@@ -40,10 +41,10 @@ public class Theif : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == int.MinValue)
-            status = ACTIVE;
-        if (status == DEAD)
-            status = ACTIVE;
+        if (status == statusTypes.Undefined)
+            status = statusTypes.Active;
+        if (status == statusTypes.Dead)
+            status = statusTypes.Active;
         SetWaypoints();
         if (isIdleTarget)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
@@ -53,7 +54,7 @@ public class Theif : Person
 
     public override void Sleep(bool forever)
     {
-        status = forever ? DEAD : ASLEEP;
+        status = forever ? statusTypes.Dead : statusTypes.Asleep;
         animations.Stop();
         agent.SetDestination(gameObject.transform.position);
         if (forever)
@@ -69,7 +70,7 @@ public class Theif : Person
 
     public override void WakeUp()
     {
-        status = ACTIVE;
+        status = statusTypes.Active;
         if (targetIndex == -1)
             SetWaypoints();
         if (isIdleTarget)
@@ -139,7 +140,7 @@ public class Theif : Person
 
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == DEAD || status == ASLEEP)
+        if (status == statusTypes.Dead || status == statusTypes.Asleep)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
@@ -149,7 +150,7 @@ public class Theif : Person
             currentTarget.GetComponentInParent<IdlePoint>().claimSpot();
         else if (!isIdleTarget && currentTarget)
             currentTarget.GetComponent<Building>().GetOccupiedBy(gameObject);
-        else if (!currentTarget && status != ASLEEP)
+        else if (!currentTarget && status != statusTypes.Asleep)
         {
             Incarnate();
             return;
@@ -172,18 +173,18 @@ public class Theif : Person
                 currentTarget.GetComponent<Building>().RemoveOccupation();
         }
 
-        else if (status != DEAD)
+        else if (status != statusTypes.Dead)
         {
             if (isIdleTarget)
             {
-                status = IDLE;
+                status = statusTypes.Idle;
                 animations.Play("Idle");
                 yield return new WaitForSeconds(2.5f);
                 Incarnate();
             }
             else
             {
-                status = IMMUNE;
+                status = statusTypes.Immune;
                 animations.Play("Gather");
                 UseAbility(currentTarget);
             }
@@ -193,7 +194,7 @@ public class Theif : Person
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Person>() && other.GetComponent<Person>().getStatus() == ACTIVE && !caughtByPolice)
+        if (other.GetComponent<Person>() && other.GetComponent<Person>().getStatus() == statusTypes.Active && !caughtByPolice)
             UseAbility(other.gameObject, false);
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
@@ -216,7 +217,7 @@ public class Theif : Person
 
     protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
     {
-        status = ACTIVE;
+        status = statusTypes.Active;
 
         if (target.GetComponent<Building>())
         {
@@ -271,7 +272,7 @@ public class Theif : Person
     public void SpottedByPolice()
     {
         gameObject.tag = "Imprisoned";
-        status = IMMUNE;
+        status = statusTypes.Immune;
         StopAllCoroutines();
         animations.Play("Talk");
         agent.SetDestination(gameObject.transform.position);
@@ -284,7 +285,7 @@ public class Theif : Person
             policeScript.Money += BribeMoney;
             Money -= BribeMoney;
             StartCoroutine(camoflauge());
-            status = ACTIVE;
+            status = statusTypes.Active;
         }
         else
         {

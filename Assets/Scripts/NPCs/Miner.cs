@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.ThirdPerson;
+using Mars.Tools;
 
 public class Miner : Person
 {
@@ -35,10 +36,10 @@ public class Miner : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == int.MinValue)
-            status = ACTIVE;
-        if (status == DEAD)
-            status = ACTIVE;
+        if (status == statusTypes.Undefined)
+            status = statusTypes.Active;
+        if (status == statusTypes.Dead)
+            status = statusTypes.Active;
         SetWaypoints();
         if (isIdleTarget)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
@@ -47,7 +48,7 @@ public class Miner : Person
     }
     public override void Sleep(bool forever)
     {
-        status = forever ? DEAD : ASLEEP;
+        status = forever ? statusTypes.Dead : statusTypes.Asleep;
         animations.Stop();
         if (forever)
         {
@@ -64,7 +65,7 @@ public class Miner : Person
 
     public override void WakeUp()
     {
-        status = ACTIVE;
+        status = statusTypes.Active;
         if (targetIndex == -1)
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
@@ -132,7 +133,7 @@ public class Miner : Person
 
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == DEAD)
+        if (status == statusTypes.Dead)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
@@ -160,18 +161,18 @@ public class Miner : Person
             if (currentTarget.GetComponent<Building>())
                 currentTarget.GetComponent<Building>().RemoveOccupation();
         }
-        else if (status != DEAD)
+        else if (status != statusTypes.Dead)
         {
             if (isIdleTarget)
             {
-                status = IDLE;
+                status = statusTypes.Idle;
                 animations.Play("Idle");
                 yield return new WaitForSeconds(2.5f);
                 Incarnate();
             }
             else
             {
-                status = IMMUNE;
+                status = statusTypes.Immune;
                 animations.Play("Mine1/Attack1");
                 UseAbility(currentTarget);
             }
@@ -194,7 +195,7 @@ public class Miner : Person
 
     protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
     {
-        status = ACTIVE;
+        status = statusTypes.Active;
 
         if (target.GetComponent<Building>())
         {

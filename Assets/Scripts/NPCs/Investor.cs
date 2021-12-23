@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mars.Tools;
 
 public class Investor : Person
 {
@@ -26,16 +27,16 @@ public class Investor : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == int.MinValue)
-            status = ACTIVE;
-        if (status == DEAD)
-            status = ACTIVE;
+        if (status == statusTypes.Undefined)
+            status = statusTypes.Active;
+        if (status == statusTypes.Dead)
+            status = statusTypes.Active;
         StartCoroutine(invest());
     }
 
     public override void Sleep(bool forever)
     {
-        status = forever ? DEAD : ASLEEP;
+        status = forever ? statusTypes.Dead : statusTypes.Asleep;
         animations.Stop();
         if (forever)
             animations.Play("Death");
@@ -45,7 +46,7 @@ public class Investor : Person
 
     public override void WakeUp()
     {
-        status = ACTIVE;
+        status = statusTypes.Active;
         Incarnate();
     }
 
@@ -54,7 +55,7 @@ public class Investor : Person
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            if (status != DEAD)
+            if (status != statusTypes.Dead)
             {
                 if (++timeSpentInvesting >= 5)
                 {

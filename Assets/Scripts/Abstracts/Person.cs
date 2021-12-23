@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mars.Tools;
 
 public abstract class Person : MonoBehaviour
 {
-    protected static int IDLE = -1, ACTIVE = 0, IMMUNE = 1,DEAD = 2,ASLEEP = 3;
-    protected int status = int.MinValue;
+    
+    protected statusTypes status = statusTypes.Undefined;
 
     protected List<Vector3> wayPoints,idlePoints;
     protected List<GameObject> wayPointTargets,idlePointTargets;
@@ -35,7 +36,7 @@ public abstract class Person : MonoBehaviour
     // Upon Completing the Ability Reduces the targets money (Changes status to ACTIVE if needed)
     protected abstract void RecieveMoneyFrom(GameObject target, bool reincarnate = true);
     // Returns the Status of this Character
-    public int getStatus() {
+    public statusTypes getStatus() {
         return status;
     }
     
