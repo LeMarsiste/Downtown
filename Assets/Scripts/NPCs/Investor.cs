@@ -9,21 +9,14 @@ public class Investor : Person
     int timeSpentInvesting = 0;
     public int baseMoney;
     public float profitPercentage;
-    // Start is called before the first frame update
-    void Start()
+
+    protected override void initializations()
     {
-        #region Initializations
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
         Money = Random.Range(0, 200);  //no exact number was specified in the Docs
         profitPercentage = Random.Range(0.01f, 0.5f); // no exact number was specified in the Docs
         baseMoney = Money;
-        #endregion
-
-        
-        
-
     }
+
     public override void Incarnate()
     {
         StopAllCoroutines();

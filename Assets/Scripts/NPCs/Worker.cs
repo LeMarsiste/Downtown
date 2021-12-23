@@ -7,17 +7,8 @@ using Mars.Tools;
 
 public class Worker : Person
 {
-
-    public void Start()
+    protected override void initializations()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
-        wayPoints = new List<Vector3>();
-        wayPointTargets = new List<GameObject>();
-        idlePoints = new List<Vector3>();
-        idlePointTargets = new List<GameObject>();
-        startingPosition = gameObject.transform.position;
-
         #region Finding (Static) Houses
         GameObject[] Houses = GameObject.FindGameObjectsWithTag("House");
         foreach (GameObject house in Houses)
@@ -29,9 +20,6 @@ public class Worker : Person
                 wayPoints.Add(house.transform.position);
         }
         #endregion
-
-        Income = Random.Range(10, 15);
-        Income *= 10;
     }
     public override void Incarnate()
     {

@@ -20,6 +20,11 @@ public class Healer : Person
         Income *= 10;
     }
 
+    protected override void initializations()
+    {
+        //Do Nothing?
+    }
+
     public void AnnounceDead(GameObject target)
     {
         if (target == gameObject || status == statusTypes.Dead)

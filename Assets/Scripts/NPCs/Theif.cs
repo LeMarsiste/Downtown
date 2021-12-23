@@ -11,16 +11,9 @@ public class Theif : Person
     public int BribeMoney = 0;
 
     bool caughtByPolice = false;
-    private void Start()
+    
+    protected override void initializations()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
-        wayPoints = new List<Vector3>();
-        wayPointTargets = new List<GameObject>();
-        idlePoints = new List<Vector3>();
-        idlePointTargets = new List<GameObject>();
-        startingPosition = gameObject.transform.position;
-
         #region Finding (Static) Houses
         GameObject[] Houses = GameObject.FindGameObjectsWithTag("House");
         foreach (GameObject house in Houses)
@@ -33,10 +26,9 @@ public class Theif : Person
         }
         #endregion
 
-        Income = Random.Range(10, 15) *10;
+        Income = Random.Range(10, 15) * 10;
         if (IsBriberTheif && BribeMoney == 0)
             BribeMoney = Random.Range(10, 15) * 10;
-
     }
     public override void Incarnate()
     {

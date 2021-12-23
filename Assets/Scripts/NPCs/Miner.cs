@@ -8,16 +8,9 @@ using Mars.Tools;
 public class Miner : Person
 {
 
-    public void Start()
+    
+    protected override void initializations()
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
-        wayPoints = new List<Vector3>();
-        wayPointTargets = new List<GameObject>();
-        idlePoints = new List<Vector3>();
-        idlePointTargets = new List<GameObject>();
-        startingPosition = gameObject.transform.position;
-
         #region Finding (Static) Mines
         GameObject[] Mines = GameObject.FindGameObjectsWithTag("Mine");
         foreach (GameObject mine in Mines)
@@ -30,8 +23,7 @@ public class Miner : Person
         }
         #endregion
 
-        Income = Random.Range(10, 15);
-        Income *= 10;
+        Income = Random.Range(10, 15) * 10;
     }
     public override void Incarnate()
     {

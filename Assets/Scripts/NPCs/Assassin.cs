@@ -9,27 +9,17 @@ public class Assassin : Person
     List<Person> healers;
 
     bool caughtByPolice = false;
-    private void Start()
-    {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
-        wayPoints = new List<Vector3>();
-        wayPointTargets = new List<GameObject>();
-        idlePoints = new List<Vector3>();
-        idlePointTargets = new List<GameObject>();
-        startingPosition = gameObject.transform.position;
 
+    protected override void initializations()
+    {
         #region Finding all the healers
         healers = new List<Person>();
         GameObject[] healerObjects = GameObject.FindGameObjectsWithTag("Healer");
         foreach (GameObject healer in healerObjects)
             healers.Add(healer.GetComponent<Healer>());
         #endregion
-
-        Income = Random.Range(0, 10);
-        Income *= 10;
-
     }
+
     public override void Incarnate()
     {
         StopAllCoroutines();

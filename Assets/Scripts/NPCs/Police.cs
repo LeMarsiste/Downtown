@@ -8,16 +8,9 @@ public class Police : Person
 {
     GameObject prison, prisonWaypoint;
     Prison prisonScript;
-    private void Start()
-    {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
-        wayPoints = new List<Vector3>();
-        wayPointTargets = new List<GameObject>();
-        idlePoints = new List<Vector3>();
-        idlePointTargets = new List<GameObject>();
-        startingPosition = gameObject.transform.position;
 
+    protected override void initializations()
+    {
         #region Finding House Objects (why? its funny)
         GameObject[] Houses = GameObject.FindGameObjectsWithTag("House");
 
@@ -34,10 +27,8 @@ public class Police : Person
 
         wayPoints.Add(prisonWaypoint.transform.position);
         wayPointTargets.Add(prison);
-
-        Income = Random.Range(0, 10);
-        Income *= 10;
     }
+
     public override void Incarnate()
     {
         StopAllCoroutines();

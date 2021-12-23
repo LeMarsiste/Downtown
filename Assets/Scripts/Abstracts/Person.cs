@@ -21,6 +21,21 @@ public abstract class Person : MonoBehaviour
     protected Vector3 agentsLastVelocity,startingPosition;
 
     public int Money, Income;
+    
+    protected virtual void Start()
+    {
+        agent = gameObject.GetComponent<NavMeshAgent>();
+        animations = gameObject.GetComponent<Animation>();
+        wayPoints = new List<Vector3>();
+        wayPointTargets = new List<GameObject>();
+        idlePoints = new List<Vector3>();
+        idlePointTargets = new List<GameObject>();
+        startingPosition = gameObject.transform.position;
+
+        Income = Random.Range(0, 10);
+        Income *= 10;
+    }
+    protected abstract void initializations();
     // (Re)Incarnates the character and initiates the thinking process
     public abstract void Incarnate();
     // Stops the activities of the character (and restarts them if needed AKA Kills the character) till it is Incarnated again
