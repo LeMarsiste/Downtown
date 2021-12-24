@@ -212,7 +212,7 @@ public class Healer : Person
                 building.money -= Income;
             }
         }
-        else if (target.tag != "Investor")
+        else if (!target.GetComponent<Investor>())
         {
             Person npc = target.GetComponent<Person>();
             if (npc.Money < Income)

@@ -178,7 +178,7 @@ public class Miner : Person
 
     IEnumerator startMining(GameObject target, bool incarnate = true)
     {
-        if (target.tag == "Mine")
+        if (target.GetComponent<Mine>())
         {
             yield return new WaitForSeconds(5f);
             RecieveMoneyFrom(target);
@@ -205,7 +205,7 @@ public class Miner : Person
             }
             building.RemoveOccupation();
         }
-        else if (target.tag != "Investor")
+        else if (!target.GetComponent<Investor>())
         {
             Person npc = target.GetComponent<Person>();
             if (npc.Money < Income)

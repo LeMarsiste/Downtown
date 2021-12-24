@@ -196,7 +196,7 @@ public class Theif : Person
 
     IEnumerator stealFrom(GameObject target, bool incarnate = true)
     {
-        if (target.tag == "House")
+        if (target.GetComponent<House>())
         {
             yield return new WaitForSeconds(5f);
             RecieveMoneyFrom(target);
@@ -227,7 +227,7 @@ public class Theif : Person
             }
             building.RemoveOccupation();
         }
-        else if (target.tag != "Investor")
+        else if (!target.GetComponent<Investor>())
         {
             Person npc = target.GetComponent<Person>();
             if (npc.Money < Income)
