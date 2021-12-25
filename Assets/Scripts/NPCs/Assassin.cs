@@ -216,6 +216,7 @@ public class Assassin : Person
         // Other Possible Implementations:
         /// 1- Adding a place to put the imprisoned NPCs there and add a "escape" mechanic to the game
         ///    we can add the "imprisoned" tag to those units and do the rest (hence the reason I have an "Imprisoned" tag)
+        RecordKeeper.Instance.RemoveEntity(gameObject);
         Destroy(gameObject);
     }
 }

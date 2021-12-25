@@ -13,6 +13,7 @@ public class House : Building
     public override void destroyBuilding()
     {
         //TODO: Add Animations for this
+        RecordKeeper.Instance.RemoveEntity(gameObject);
         Destroy(gameObject);
     }
 

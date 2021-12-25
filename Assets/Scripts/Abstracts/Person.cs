@@ -41,6 +41,8 @@ public abstract class Person : MonoBehaviour
 
         Income = Random.Range(0, 10);
         Income *= 10;
+
+        initializations();
     }
     protected abstract void initializations();
     // (Re)Incarnates the character and initiates the thinking process
