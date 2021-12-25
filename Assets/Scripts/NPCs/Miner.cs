@@ -12,9 +12,11 @@ public class Miner : Person
     protected override void initializations()
     {
         #region Finding (Static) Mines
-        GameObject[] Mines = GameObject.FindGameObjectsWithTag("Mine");
-        foreach (GameObject mine in Mines)
+        Mine[] Mines = RecordKeeper.Instance.GetMines().ToArray();
+        foreach (Mine mineScript in Mines)
         {
+            GameObject mine = mineScript.gameObject;
+
             wayPointTargets.Add(mine);
             if (mine.transform.Find("Waypoint Portal"))
                 wayPoints.Add(mine.transform.Find("Waypoint Portal").position);
@@ -83,14 +85,14 @@ public class Miner : Person
         if (possibleTargets.Count == 0)
         {
             isIdleTarget = true;
-            GameObject[] idleSpots = GameObject.FindGameObjectsWithTag("Environment");
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
             targetIndex = 0;
 
-            foreach (GameObject spot in idleSpots)
+            foreach (IdlePoint spot in idleSpots)
             {
-                if (spot.GetComponent<IdlePoint>() && spot.GetComponent<IdlePoint>().occupied == false)
+                if ( spot.GetComponent<IdlePoint>().occupied == false)
                 {
-                    idlePointTargets.Add(spot);
+                    idlePointTargets.Add(spot.gameObject);
                     idlePoints.Add(spot.transform.position);
                     return;
 

@@ -22,6 +22,13 @@ public abstract class Person : MonoBehaviour
 
     public int Money, Income;
     
+    protected virtual void Awake()
+    {
+        if (RecordKeeper.Instance == null)
+            RecordKeeper.Instance = GameObject.Find("RecordKeeper").GetComponent<RecordKeeper>(); //This was necessary
+        RecordKeeper.Instance.AddEntity(gameObject);
+    }
+
     protected virtual void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();

@@ -10,9 +10,10 @@ public class Worker : Person
     protected override void initializations()
     {
         #region Finding (Static) Houses
-        GameObject[] Houses = GameObject.FindGameObjectsWithTag("House");
-        foreach (GameObject house in Houses)
+        House[] Houses = RecordKeeper.Instance.GetHouses().ToArray();
+        foreach (House houseScript in Houses)
         {
+            GameObject house = houseScript.gameObject;
             wayPointTargets.Add(house);
             if (house.transform.Find("Waypoint Portal"))
                 wayPoints.Add(house.transform.Find("Waypoint Portal").position);
@@ -84,14 +85,14 @@ public class Worker : Person
         if (possibleTargets.Count == 0)
         {
             isIdleTarget = true;
-            GameObject[] idleSpots = GameObject.FindGameObjectsWithTag("Environment");
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
             targetIndex = 0;
 
-            foreach (GameObject spot in idleSpots)
+            foreach (IdlePoint spot in idleSpots)
             {
-                if (spot.GetComponent<IdlePoint>() && spot.GetComponent<IdlePoint>().occupied == false)
+                if ( spot.GetComponent<IdlePoint>().occupied == false)
                 {
-                    idlePointTargets.Add(spot);
+                    idlePointTargets.Add(spot.gameObject);
                     idlePoints.Add(spot.transform.position);
                     return;
 

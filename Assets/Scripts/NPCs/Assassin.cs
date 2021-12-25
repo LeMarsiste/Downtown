@@ -13,10 +13,7 @@ public class Assassin : Person
     protected override void initializations()
     {
         #region Finding all the healers
-        healers = new List<Person>();
-        GameObject[] healerObjects = GameObject.FindGameObjectsWithTag("Healer");
-        foreach (GameObject healer in healerObjects)
-            healers.Add(healer.GetComponent<Healer>());
+        healers = new List<Person>(RecordKeeper.Instance.GetHealers());
         #endregion
     }
 

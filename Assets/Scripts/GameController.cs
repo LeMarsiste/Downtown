@@ -20,9 +20,10 @@ public class GameController : MonoBehaviour
     {
         Entries = new List<GameObject>();
 
-        Person[] npcs = FindObjectsOfType<Person>();
-        foreach (Person npc in npcs)
+        GameObject[] npcs = RecordKeeper.Instance.GetNPCs().ToArray();
+        foreach (GameObject NPC in npcs)
         {
+            Person npc = NPC.GetComponent<Person>();
             Characters.Add(npc);
             GameObject newEntry = Instantiate(EntryPrefab, StatusArea.transform) as GameObject;
             newEntry.transform.Find("Name Text").GetComponent<TextMeshProUGUI>().text = npc.name;
@@ -65,15 +66,15 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             Entries = new List<GameObject>();
 
-            Person[] npcs = FindObjectsOfType<Person>();
 
-            GameObject[] statusAreaChildren = GameObject.FindGameObjectsWithTag("StatusUI");
-            foreach (GameObject child in statusAreaChildren)
-                Destroy(child.gameObject);
+            foreach (Transform child in StatusArea.GetComponentsInChildren<Transform>())
+                if (child.gameObject != StatusArea)
+                    Destroy(child.gameObject);
 
-            foreach (Person npc in npcs)
+            GameObject[] npcs = RecordKeeper.Instance.GetNPCs().ToArray();
+            foreach (GameObject NPC in npcs)
             {
-                Characters.Add(npc);
+                Person npc = NPC.GetComponent<Person>();
                 GameObject newEntry = Instantiate(EntryPrefab, StatusArea.transform) as GameObject;
                 newEntry.transform.Find("Name Text").GetComponent<TextMeshProUGUI>().text = npc.name;
                 newEntry.transform.Find("Money Text").GetComponent<TextMeshProUGUI>().text = npc.Money.ToString();

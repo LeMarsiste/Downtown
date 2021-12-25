@@ -12,16 +12,17 @@ public class Police : Person
     protected override void initializations()
     {
         #region Finding House Objects (why? its funny)
-        GameObject[] Houses = GameObject.FindGameObjectsWithTag("House");
+        House[] Houses = RecordKeeper.Instance.GetHouses().ToArray(); 
 
-        foreach (GameObject house in Houses)
+        foreach (House houseScript in Houses)
         {
+            GameObject house = houseScript.gameObject;
             wayPointTargets.Add(house);
             wayPoints.Add(house.transform.position);
         }
         #endregion
 
-        prison = GameObject.FindGameObjectWithTag("Prison");
+        prison = RecordKeeper.Instance.GetPrisons()[0].gameObject;
         prisonWaypoint = prison.transform.Find("Waypoint Portal").gameObject;
         prisonScript = prison.GetComponent<Prison>();
 

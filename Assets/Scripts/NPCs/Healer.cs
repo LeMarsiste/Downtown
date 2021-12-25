@@ -6,19 +6,7 @@ using Mars.Tools;
 
 public class Healer : Person
 {
-    private void Start()
-    {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
-        wayPoints = new List<Vector3>();
-        wayPointTargets = new List<GameObject>();
-        idlePoints = new List<Vector3>();
-        idlePointTargets = new List<GameObject>();
-        startingPosition = gameObject.transform.position;
-
-        Income = Random.Range(0, 10);
-        Income *= 10;
-    }
+    
 
     protected override void initializations()
     {
@@ -84,14 +72,14 @@ public class Healer : Person
         if (wayPoints.Count == 0)
         {
             isIdleTarget = true;
-            GameObject[] idleSpots = GameObject.FindGameObjectsWithTag("Environment");
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
             targetIndex = 0;
 
-            foreach (GameObject spot in idleSpots)
+            foreach (IdlePoint spot in idleSpots)
             {
-                if (spot.GetComponentInParent<IdlePoint>() && spot.GetComponentInParent<IdlePoint>().occupied == false)
+                if (spot.GetComponentInParent<IdlePoint>().occupied == false)
                 {
-                    idlePointTargets.Add(spot);
+                    idlePointTargets.Add(spot.gameObject);
                     idlePoints.Add(spot.transform.position);
                     return;
 
