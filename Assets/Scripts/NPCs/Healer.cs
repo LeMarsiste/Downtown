@@ -42,7 +42,8 @@ public class Healer : Person
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
-        animations.Stop();
+        //animations.Stop();
+        
         if (forever)
         {
             animations.Play("Death");

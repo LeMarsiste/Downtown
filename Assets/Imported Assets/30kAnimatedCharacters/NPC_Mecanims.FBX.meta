@@ -1,165 +1,409 @@
 fileFormatVersion: 2
 guid: 0dea0596c9aaa7e438f1f4d52fb4ca10
-timeCreated: 1493391216
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: Backet_Bone
-    100002: CATHead
-    100004: CATLArm
-    100006: CATLCalf
-    100008: CATLClavicle
-    100010: CATLFingers1
-    100012: CATLFingers2
-    100014: CATLFoot
-    100016: CATLForearm
-    100018: CATLHand
-    100020: CATLLegPlatform
-    100022: CATLThigh
-    100024: CATLThumb1
-    100026: CATLThumb2
-    100028: CATNeck
-    100030: CATPelvis
-    100032: CATRArm
-    100034: CATRCalf
-    100036: CATRClavicle
-    100038: CATRFingers1
-    100040: CATRFingers2
-    100042: CATRFoot
-    100044: CATRForearm
-    100046: CATRHand
-    100048: CATRigLArmIKTarget
-    100050: CATRigLLegDigit11
-    100052: CATRigLLegDigit12
-    100054: CATRigRArmIKTarget
-    100056: CATRLegPlatform
-    100058: CATRThigh
-    100060: CATRThumb1
-    100062: CATRThumb2
-    100064: CATRToe1
-    100066: CATRToe2
-    100068: CATSpine1
-    100070: CATSpine2
-    100072: CATSpine3
-    100074: Character001
-    100076: Head_slot
-    100078: LBracers_slot
-    100080: LShoulders_slot
-    100082: //RootNode
-    100084: Particle View 001
-    100086: RBracers_slot
-    100088: RShoulders_slot
-    100090: ShieldBow_Slot
-    100092: WeaponSlot
-    100094: WeaponSlotPelvis
-    400000: Backet_Bone
-    400002: CATHead
-    400004: CATLArm
-    400006: CATLCalf
-    400008: CATLClavicle
-    400010: CATLFingers1
-    400012: CATLFingers2
-    400014: CATLFoot
-    400016: CATLForearm
-    400018: CATLHand
-    400020: CATLLegPlatform
-    400022: CATLThigh
-    400024: CATLThumb1
-    400026: CATLThumb2
-    400028: CATNeck
-    400030: CATPelvis
-    400032: CATRArm
-    400034: CATRCalf
-    400036: CATRClavicle
-    400038: CATRFingers1
-    400040: CATRFingers2
-    400042: CATRFoot
-    400044: CATRForearm
-    400046: CATRHand
-    400048: CATRigLArmIKTarget
-    400050: CATRigLLegDigit11
-    400052: CATRigLLegDigit12
-    400054: CATRigRArmIKTarget
-    400056: CATRLegPlatform
-    400058: CATRThigh
-    400060: CATRThumb1
-    400062: CATRThumb2
-    400064: CATRToe1
-    400066: CATRToe2
-    400068: CATSpine1
-    400070: CATSpine2
-    400072: CATSpine3
-    400074: Character001
-    400076: Head_slot
-    400078: LBracers_slot
-    400080: LShoulders_slot
-    400082: //RootNode
-    400084: Particle View 001
-    400086: RBracers_slot
-    400088: RShoulders_slot
-    400090: ShieldBow_Slot
-    400092: WeaponSlot
-    400094: WeaponSlotPelvis
-    7400000: Run
-    7400002: WalkFront
-    7400004: WalkBack
-    7400006: WalkRight
-    7400008: WalkLeft
-    7400010: Idle
-    7400012: Idle2
-    7400014: Mine1/Attack1
-    7400016: Mine2/Attack2
-    7400018: Lumbering
-    7400020: Sawing
-    7400022: Build1
-    7400024: Build2
-    7400026: Digging
-    7400028: Use
-    7400030: Gather
-    7400032: Talk
-    7400034: Hit1
-    7400036: Hit2
-    7400038: Death
-    7400040: Jump
-    9500000: //RootNode
-    11100000: //RootNode
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Backet_Bone
+  - first:
+      1: 100002
+    second: CATHead
+  - first:
+      1: 100004
+    second: CATLArm
+  - first:
+      1: 100006
+    second: CATLCalf
+  - first:
+      1: 100008
+    second: CATLClavicle
+  - first:
+      1: 100010
+    second: CATLFingers1
+  - first:
+      1: 100012
+    second: CATLFingers2
+  - first:
+      1: 100014
+    second: CATLFoot
+  - first:
+      1: 100016
+    second: CATLForearm
+  - first:
+      1: 100018
+    second: CATLHand
+  - first:
+      1: 100020
+    second: CATLLegPlatform
+  - first:
+      1: 100022
+    second: CATLThigh
+  - first:
+      1: 100024
+    second: CATLThumb1
+  - first:
+      1: 100026
+    second: CATLThumb2
+  - first:
+      1: 100028
+    second: CATNeck
+  - first:
+      1: 100030
+    second: CATPelvis
+  - first:
+      1: 100032
+    second: CATRArm
+  - first:
+      1: 100034
+    second: CATRCalf
+  - first:
+      1: 100036
+    second: CATRClavicle
+  - first:
+      1: 100038
+    second: CATRFingers1
+  - first:
+      1: 100040
+    second: CATRFingers2
+  - first:
+      1: 100042
+    second: CATRFoot
+  - first:
+      1: 100044
+    second: CATRForearm
+  - first:
+      1: 100046
+    second: CATRHand
+  - first:
+      1: 100048
+    second: CATRigLArmIKTarget
+  - first:
+      1: 100050
+    second: CATRigLLegDigit11
+  - first:
+      1: 100052
+    second: CATRigLLegDigit12
+  - first:
+      1: 100054
+    second: CATRigRArmIKTarget
+  - first:
+      1: 100056
+    second: CATRLegPlatform
+  - first:
+      1: 100058
+    second: CATRThigh
+  - first:
+      1: 100060
+    second: CATRThumb1
+  - first:
+      1: 100062
+    second: CATRThumb2
+  - first:
+      1: 100064
+    second: CATRToe1
+  - first:
+      1: 100066
+    second: CATRToe2
+  - first:
+      1: 100068
+    second: CATSpine1
+  - first:
+      1: 100070
+    second: CATSpine2
+  - first:
+      1: 100072
+    second: CATSpine3
+  - first:
+      1: 100074
+    second: Character001
+  - first:
+      1: 100076
+    second: Head_slot
+  - first:
+      1: 100078
+    second: LBracers_slot
+  - first:
+      1: 100080
+    second: LShoulders_slot
+  - first:
+      1: 100082
+    second: //RootNode
+  - first:
+      1: 100084
+    second: Particle View 001
+  - first:
+      1: 100086
+    second: RBracers_slot
+  - first:
+      1: 100088
+    second: RShoulders_slot
+  - first:
+      1: 100090
+    second: ShieldBow_Slot
+  - first:
+      1: 100092
+    second: WeaponSlot
+  - first:
+      1: 100094
+    second: WeaponSlotPelvis
+  - first:
+      4: 400000
+    second: Backet_Bone
+  - first:
+      4: 400002
+    second: CATHead
+  - first:
+      4: 400004
+    second: CATLArm
+  - first:
+      4: 400006
+    second: CATLCalf
+  - first:
+      4: 400008
+    second: CATLClavicle
+  - first:
+      4: 400010
+    second: CATLFingers1
+  - first:
+      4: 400012
+    second: CATLFingers2
+  - first:
+      4: 400014
+    second: CATLFoot
+  - first:
+      4: 400016
+    second: CATLForearm
+  - first:
+      4: 400018
+    second: CATLHand
+  - first:
+      4: 400020
+    second: CATLLegPlatform
+  - first:
+      4: 400022
+    second: CATLThigh
+  - first:
+      4: 400024
+    second: CATLThumb1
+  - first:
+      4: 400026
+    second: CATLThumb2
+  - first:
+      4: 400028
+    second: CATNeck
+  - first:
+      4: 400030
+    second: CATPelvis
+  - first:
+      4: 400032
+    second: CATRArm
+  - first:
+      4: 400034
+    second: CATRCalf
+  - first:
+      4: 400036
+    second: CATRClavicle
+  - first:
+      4: 400038
+    second: CATRFingers1
+  - first:
+      4: 400040
+    second: CATRFingers2
+  - first:
+      4: 400042
+    second: CATRFoot
+  - first:
+      4: 400044
+    second: CATRForearm
+  - first:
+      4: 400046
+    second: CATRHand
+  - first:
+      4: 400048
+    second: CATRigLArmIKTarget
+  - first:
+      4: 400050
+    second: CATRigLLegDigit11
+  - first:
+      4: 400052
+    second: CATRigLLegDigit12
+  - first:
+      4: 400054
+    second: CATRigRArmIKTarget
+  - first:
+      4: 400056
+    second: CATRLegPlatform
+  - first:
+      4: 400058
+    second: CATRThigh
+  - first:
+      4: 400060
+    second: CATRThumb1
+  - first:
+      4: 400062
+    second: CATRThumb2
+  - first:
+      4: 400064
+    second: CATRToe1
+  - first:
+      4: 400066
+    second: CATRToe2
+  - first:
+      4: 400068
+    second: CATSpine1
+  - first:
+      4: 400070
+    second: CATSpine2
+  - first:
+      4: 400072
+    second: CATSpine3
+  - first:
+      4: 400074
+    second: Character001
+  - first:
+      4: 400076
+    second: Head_slot
+  - first:
+      4: 400078
+    second: LBracers_slot
+  - first:
+      4: 400080
+    second: LShoulders_slot
+  - first:
+      4: 400082
+    second: //RootNode
+  - first:
+      4: 400084
+    second: Particle View 001
+  - first:
+      4: 400086
+    second: RBracers_slot
+  - first:
+      4: 400088
+    second: RShoulders_slot
+  - first:
+      4: 400090
+    second: ShieldBow_Slot
+  - first:
+      4: 400092
+    second: WeaponSlot
+  - first:
+      4: 400094
+    second: WeaponSlotPelvis
+  - first:
+      74: 7400000
+    second: Run
+  - first:
+      74: 7400002
+    second: WalkFront
+  - first:
+      74: 7400004
+    second: WalkBack
+  - first:
+      74: 7400006
+    second: WalkRight
+  - first:
+      74: 7400008
+    second: WalkLeft
+  - first:
+      74: 7400010
+    second: Idle
+  - first:
+      74: 7400012
+    second: Idle2
+  - first:
+      74: 7400014
+    second: Mine1/Attack1
+  - first:
+      74: 7400016
+    second: Mine2/Attack2
+  - first:
+      74: 7400018
+    second: Lumbering
+  - first:
+      74: 7400020
+    second: Sawing
+  - first:
+      74: 7400022
+    second: Build1
+  - first:
+      74: 7400024
+    second: Build2
+  - first:
+      74: 7400026
+    second: Digging
+  - first:
+      74: 7400028
+    second: Use
+  - first:
+      74: 7400030
+    second: Gather
+  - first:
+      74: 7400032
+    second: Talk
+  - first:
+      74: 7400034
+    second: Hit1
+  - first:
+      74: 7400036
+    second: Hit2
+  - first:
+      74: 7400038
+    second: Death
+  - first:
+      74: 7400040
+    second: Jump
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'CATSpine3' is inbetween humanoid transforms
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'CATSpine3' is inbetween humanoid transforms
       and has rotation animation that will be discarded.\n\t'CATLForearm' has translation
       animation that will be discarded.\n\t'CATLFingers1' has translation animation
-      that will be discarded.\n\t'CATLFingers2' has scale animation that will be discarded.\n\t'CATLThumb2'
-      has scale animation that will be discarded.\n\t'CATRForearm' has translation
-      animation that will be discarded.\n\t'CATRHand' has scale animation that will
-      be discarded.\n\t'CATRFingers1' has scale animation that will be discarded.\n\t'CATRFingers2'
-      has scale animation that will be discarded.\n\t'CATRThumb2' has scale animation
-      that will be discarded.\n\t'CATLCalf' has scale animation that will be discarded.\n\t'CATLFoot'
-      has scale animation that will be discarded.\n\t'CATRigLLegDigit11' has scale
-      animation that will be discarded.\n"
+      that will be discarded.\n\t'CATLFingers2' has scale animation that will be
+      discarded.\n\t'CATLThumb2' has scale animation that will be discarded.\n\t'CATRForearm'
+      has translation animation that will be discarded.\n\t'CATRHand' has scale animation
+      that will be discarded.\n\t'CATRFingers1' has scale animation that will be
+      discarded.\n\t'CATRFingers2' has scale animation that will be discarded.\n\t'CATRThumb2'
+      has scale animation that will be discarded.\n\t'CATLCalf' has scale animation
+      that will be discarded.\n\t'CATLFoot' has scale animation that will be discarded.\n\t'CATRigLLegDigit11'
+      has scale animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Run
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 20
       wrapMode: 2
@@ -188,6 +432,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WalkFront
       takeName: Take 001
+      internalID: 0
       firstFrame: 30
       lastFrame: 60
       wrapMode: 2
@@ -216,6 +461,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WalkBack
       takeName: Take 001
+      internalID: 0
       firstFrame: 60
       lastFrame: 90
       wrapMode: 2
@@ -244,6 +490,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WalkRight
       takeName: Take 001
+      internalID: 0
       firstFrame: 120
       lastFrame: 150
       wrapMode: 2
@@ -272,6 +519,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WalkLeft
       takeName: Take 001
+      internalID: 0
       firstFrame: 150
       lastFrame: 180
       wrapMode: 2
@@ -300,6 +548,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Take 001
+      internalID: 0
       firstFrame: 190
       lastFrame: 220
       wrapMode: 2
@@ -308,7 +557,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -328,6 +577,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle2
       takeName: Take 001
+      internalID: 0
       firstFrame: 230
       lastFrame: 290
       wrapMode: 2
@@ -336,7 +586,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -356,6 +606,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Mine1/Attack1
       takeName: Take 001
+      internalID: 0
       firstFrame: 300
       lastFrame: 330
       wrapMode: 2
@@ -364,7 +615,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -384,6 +635,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Mine2/Attack2
       takeName: Take 001
+      internalID: 0
       firstFrame: 340
       lastFrame: 370
       wrapMode: 2
@@ -392,7 +644,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -412,6 +664,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Lumbering
       takeName: Take 001
+      internalID: 0
       firstFrame: 380
       lastFrame: 410
       wrapMode: 2
@@ -420,7 +673,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -440,6 +693,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Sawing
       takeName: Take 001
+      internalID: 0
       firstFrame: 420
       lastFrame: 450
       wrapMode: 2
@@ -468,6 +722,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Build1
       takeName: Take 001
+      internalID: 0
       firstFrame: 460
       lastFrame: 490
       wrapMode: 2
@@ -496,6 +751,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Build2
       takeName: Take 001
+      internalID: 0
       firstFrame: 500
       lastFrame: 530
       wrapMode: 2
@@ -504,7 +760,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -524,6 +780,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Digging
       takeName: Take 001
+      internalID: 0
       firstFrame: 540
       lastFrame: 570
       wrapMode: 2
@@ -552,6 +809,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Use
       takeName: Take 001
+      internalID: 0
       firstFrame: 580
       lastFrame: 610
       wrapMode: 2
@@ -560,7 +818,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -580,6 +838,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Gather
       takeName: Take 001
+      internalID: 0
       firstFrame: 620
       lastFrame: 650
       wrapMode: 2
@@ -588,7 +847,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -608,6 +867,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Talk
       takeName: Take 001
+      internalID: 0
       firstFrame: 660
       lastFrame: 720
       wrapMode: 0
@@ -636,6 +896,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Hit1
       takeName: Take 001
+      internalID: 0
       firstFrame: 730
       lastFrame: 740
       wrapMode: 0
@@ -664,6 +925,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Hit2
       takeName: Take 001
+      internalID: 0
       firstFrame: 750
       lastFrame: 760
       wrapMode: 0
@@ -692,6 +954,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Death
       takeName: Take 001
+      internalID: 0
       firstFrame: 770
       lastFrame: 810
       wrapMode: 0
@@ -720,6 +983,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Jump
       takeName: Take 001
+      internalID: 0
       firstFrame: 820
       lastFrame: 845
       wrapMode: 0
@@ -751,26 +1015,45 @@ ModelImporter:
     globalScale: 0.01
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: CATPelvis
       humanName: Hips
@@ -1043,8 +1326,7 @@ ModelImporter:
     - name: CATRigLLegDigit12
       parentName: CATRigLLegDigit11
       position: {x: -0.022499999, y: -0.0000000047683715, z: 0}
-      rotation: {x: -0.0000000074505717, y: 1.11017895e-16, z: -0.000000014900587,
-        w: 1}
+      rotation: {x: -0.0000000074505717, y: 1.11017895e-16, z: -0.000000014900587, w: 1}
       scale: {x: 1.0000385, y: 1.0000012, z: 0.99996173}
     - name: CATRThigh
       parentName: CATPelvis
@@ -1149,8 +1431,7 @@ ModelImporter:
     - name: CATNeck
       parentName: CATSpine3
       position: {x: -0.03662834, y: 0.0000000047683715, z: 0}
-      rotation: {x: -0.0000000011584232, y: 0.000000003809718, z: 0.0000000037252903,
-        w: 1}
+      rotation: {x: -0.0000000011584232, y: 0.000000003809718, z: 0.0000000037252903, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: CATHead
       parentName: CATNeck
@@ -1254,14 +1535,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 0.01
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 1
   userData: 
   assetBundleName: 

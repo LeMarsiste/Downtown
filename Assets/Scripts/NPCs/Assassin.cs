@@ -36,7 +36,8 @@ public class Assassin : Person
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         StopAllCoroutines();
         agent.SetDestination(gameObject.transform.position);
-        animations.Stop();
+        //animations.Stop();
+        
     }
 
     public override void WakeUp()

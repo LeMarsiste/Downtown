@@ -49,7 +49,8 @@ public class Theif : Person
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
-        animations.Stop();
+        //animations.Stop();
+        
         agent.SetDestination(gameObject.transform.position);
         if (forever)
         {
@@ -284,7 +285,7 @@ public class Theif : Person
         }
         else
         {
-            animations.Play("WalkFront");
+            animations.Play("Run");
             agent.SetDestination(prisonPos);
             StartCoroutine(GoToPrison());
         }

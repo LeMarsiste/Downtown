@@ -15,17 +15,21 @@ public abstract class Person : MonoBehaviour
     protected int targetIndex = -1;
     protected bool isIdleTarget;
 
-    protected Animation animations;
+    protected Animator animations;
 
     protected NavMeshAgent agent;
     protected Vector3 agentsLastVelocity,startingPosition;
 
     public int Money, Income;
-
+    protected virtual void Awake()
+    {
+        RecordKeeper.Instance.AddEntity(gameObject);
+    }
     protected virtual void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
-        animations = gameObject.GetComponent<Animation>();
+        animations = gameObject.GetComponent<Animator>();
+        animations.Play("Idle");
         wayPoints = new List<Vector3>();
         wayPointTargets = new List<GameObject>();
         idlePoints = new List<Vector3>();
