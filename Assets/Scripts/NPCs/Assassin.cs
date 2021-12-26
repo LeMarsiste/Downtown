@@ -10,7 +10,7 @@ public class Assassin : Person
 
     bool caughtByPolice = false;
 
-    protected override void initializations()
+    protected override void Initializations()
     {
         #region Finding all the healers
         healers = new List<Person>(RecordKeeper.Instance.GetHealers());
@@ -20,10 +20,10 @@ public class Assassin : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == statusTypes.Undefined)
-            status = statusTypes.Active;
-        if (status == statusTypes.Dead)
-            status = statusTypes.Active;
+        if (status == StatusTypes.Undefined)
+            status = StatusTypes.Active;
+        if (status == StatusTypes.Dead)
+            status = StatusTypes.Active;
         SetWaypoints();
         if (isIdleTarget)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
@@ -33,7 +33,7 @@ public class Assassin : Person
 
     public override void Sleep(bool forever)
     {
-        status = forever ? statusTypes.Dead : statusTypes.Asleep;
+        status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         StopAllCoroutines();
         agent.SetDestination(gameObject.transform.position);
         animations.Stop();
@@ -41,7 +41,7 @@ public class Assassin : Person
 
     public override void WakeUp()
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
         if (targetIndex == -1)
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
@@ -57,7 +57,7 @@ public class Assassin : Person
         Person[] NPCs = FindObjectsOfType<Person>();
         foreach (Person npc in NPCs)
         {
-            if (npc.gameObject != gameObject && npc.getStatus() == statusTypes.Active)
+            if (npc.gameObject != gameObject && npc.GetStatus() == StatusTypes.Active)
             {
                 wayPointTargets.Add(npc.gameObject);
                 wayPoints.Add(npc.gameObject.transform.position);
@@ -102,7 +102,7 @@ public class Assassin : Person
         targetIndex = Random.Range(0, wayPointTargets.Count - 1);
 
         if (isIdleTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().freeSpot();
+            CurrentTarget.GetComponentInParent<IdlePoint>().FreeSpot();
         isIdleTarget = false;
 
         if (wayPointTargets[targetIndex] == null)
@@ -118,12 +118,12 @@ public class Assassin : Person
     {
         agent.SetDestination(waypointPos);
         animations.Play("Run");
-        currentTarget = waypointTarget;
+        CurrentTarget = waypointTarget;
         if (isIdleTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().claimSpot();
-        StartCoroutine(navigateToPosition());
+            CurrentTarget.GetComponentInParent<IdlePoint>().ClaimSpot();
+        StartCoroutine(NavigateToPosition());
     }
-    IEnumerator navigateToPosition()
+    IEnumerator NavigateToPosition()
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();
@@ -137,22 +137,22 @@ public class Assassin : Person
         {
             if (isIdleTarget)
             {
-                status = statusTypes.Idle;
+                status = StatusTypes.Idle;
                 animations.Play("Idle");
                 yield return new WaitForSeconds(2.5f);
             }
             else
-                status = statusTypes.Active;
+                status = StatusTypes.Active;
             Incarnate();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Person>() && other.GetComponent<Person>().getStatus() == statusTypes.Active && status == statusTypes.Active && !caughtByPolice)
+        if (other.GetComponent<Person>() && other.GetComponent<Person>().GetStatus() == StatusTypes.Active && status == StatusTypes.Active && !caughtByPolice)
             UseAbility(other.gameObject);
     }
-    IEnumerator killTarget(GameObject target,bool reincarnate)
+    IEnumerator KillTarget(GameObject target,bool reincarnate)
     {
         if (target.GetComponent<Person>())
         {
@@ -170,7 +170,7 @@ public class Assassin : Person
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
     {
-        StartCoroutine(killTarget(target.gameObject,reincarnate));
+        StartCoroutine(KillTarget(target.gameObject,reincarnate));
         
     }
     protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
@@ -194,7 +194,7 @@ public class Assassin : Person
     public void SpottedByPolice()
     {
         gameObject.tag = "Imprisoned";
-        status = statusTypes.Immune;
+        status = StatusTypes.Immune;
         StopAllCoroutines();
         caughtByPolice = true;
         animations.Play("Talk");

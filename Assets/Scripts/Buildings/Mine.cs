@@ -7,9 +7,9 @@ public class Mine : Building
     private void Update()
     {
         if (money == 0)
-            destroyBuilding();
+            DestroyBuilding();
     }
-    public override void destroyBuilding()
+    public override void DestroyBuilding()
     {
         //TODO: Add Animations for this
         Destroy(gameObject);

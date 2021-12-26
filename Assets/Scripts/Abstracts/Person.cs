@@ -7,11 +7,11 @@ using Mars.Tools;
 public abstract class Person : MonoBehaviour
 {
     
-    protected statusTypes status = statusTypes.Undefined;
+    protected StatusTypes status = StatusTypes.Undefined;
 
     protected List<Vector3> wayPoints,idlePoints;
     protected List<GameObject> wayPointTargets,idlePointTargets;
-    public GameObject currentTarget;
+    public GameObject CurrentTarget;
     protected int targetIndex = -1;
     protected bool isIdleTarget;
 
@@ -21,13 +21,6 @@ public abstract class Person : MonoBehaviour
     protected Vector3 agentsLastVelocity,startingPosition;
 
     public int Money, Income;
-    
-    protected virtual void Awake()
-    {
-        if (RecordKeeper.Instance == null)
-            RecordKeeper.Instance = GameObject.Find("RecordKeeper").GetComponent<RecordKeeper>(); //This was necessary
-        RecordKeeper.Instance.AddEntity(gameObject);
-    }
 
     protected virtual void Start()
     {
@@ -42,9 +35,9 @@ public abstract class Person : MonoBehaviour
         Income = Random.Range(0, 10);
         Income *= 10;
 
-        initializations();
+        Initializations();
     }
-    protected abstract void initializations();
+    protected abstract void Initializations();
     // (Re)Incarnates the character and initiates the thinking process
     public abstract void Incarnate();
     // Stops the activities of the character (and restarts them if needed AKA Kills the character) till it is Incarnated again
@@ -60,7 +53,7 @@ public abstract class Person : MonoBehaviour
     // Upon Completing the Ability Reduces the targets money (Changes status to ACTIVE if needed)
     protected abstract void RecieveMoneyFrom(GameObject target, bool reincarnate = true);
     // Returns the Status of this Character
-    public statusTypes getStatus() {
+    public StatusTypes GetStatus() {
         return status;
     }
     

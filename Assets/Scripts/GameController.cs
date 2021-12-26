@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
     }
     public void StartTheMatch()
     {
-        StartCoroutine(startMatch());
+        StartCoroutine(StartMatch());
     }
     public void PauseTheMatch()
     {
@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
             npc.WakeUp();
         PausedText.gameObject.SetActive(false);
     }
-    IEnumerator startMatch()
+    IEnumerator StartMatch()
     {
         for (int i = 0; i < 60; i++)
         {
@@ -57,9 +57,9 @@ public class GameController : MonoBehaviour
         foreach (Person npc in Characters)
             npc.Incarnate();
         StatusArea.SetActive(true);
-        StartCoroutine(updateStatus());
+        StartCoroutine(UpdateStatus());
     }
-    IEnumerator updateStatus()
+    IEnumerator UpdateStatus()
     {
         while (true)
         {

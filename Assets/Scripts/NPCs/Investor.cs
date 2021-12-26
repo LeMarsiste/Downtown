@@ -7,29 +7,29 @@ using Mars.Tools;
 public class Investor : Person
 {
     int timeSpentInvesting = 0;
-    public int baseMoney;
-    public float profitPercentage;
+    public int BaseMoney;
+    public float ProfitPercentage;
 
-    protected override void initializations()
+    protected override void Initializations()
     {
         Money = Random.Range(0, 200);  //no exact number was specified in the Docs
-        profitPercentage = Random.Range(0.01f, 0.5f); // no exact number was specified in the Docs
-        baseMoney = Money;
+        ProfitPercentage = Random.Range(0.01f, 0.5f); // no exact number was specified in the Docs
+        BaseMoney = Money;
     }
 
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == statusTypes.Undefined)
-            status = statusTypes.Active;
-        if (status == statusTypes.Dead)
-            status = statusTypes.Active;
-        StartCoroutine(invest());
+        if (status == StatusTypes.Undefined)
+            status = StatusTypes.Active;
+        if (status == StatusTypes.Dead)
+            status = StatusTypes.Active;
+        StartCoroutine(Invest());
     }
 
     public override void Sleep(bool forever)
     {
-        status = forever ? statusTypes.Dead : statusTypes.Asleep;
+        status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         animations.Stop();
         if (forever)
             animations.Play("Death");
@@ -39,16 +39,16 @@ public class Investor : Person
 
     public override void WakeUp()
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
         Incarnate();
     }
 
-    IEnumerator invest()
+    IEnumerator Invest()
     {
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            if (status != statusTypes.Dead)
+            if (status != StatusTypes.Dead)
             {
                 if (++timeSpentInvesting >= 5)
                 {
@@ -60,7 +60,7 @@ public class Investor : Person
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
     {
-        Money += (int)(Money * profitPercentage);
+        Money += (int)(Money * ProfitPercentage);
         animations.Play("Jump");
     }
     #region Violating SOLID(tm) 

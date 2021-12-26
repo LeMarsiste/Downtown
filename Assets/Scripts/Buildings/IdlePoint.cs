@@ -11,11 +11,11 @@ public class IdlePoint : MonoBehaviour
             RecordKeeper.Instance = GameObject.Find("RecordKeeper").GetComponent<RecordKeeper>(); //This was necessary
         RecordKeeper.Instance.AddEntity(gameObject);
     }
-    public void claimSpot()
+    public void ClaimSpot()
     {
         occupied = true;
     }
-    public void freeSpot()
+    public void FreeSpot()
     {
         occupied = false;
     }

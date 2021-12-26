@@ -15,7 +15,7 @@ public abstract class Building : MonoBehaviour
         RecordKeeper.Instance.AddEntity(gameObject);
     }
 
-    public abstract void destroyBuilding();
+    public abstract void DestroyBuilding();
     public abstract void RemoveOccupation();
     public abstract void GetOccupiedBy(GameObject target);
     

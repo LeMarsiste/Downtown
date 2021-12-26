@@ -9,7 +9,7 @@ public class Miner : Person
 {
 
     
-    protected override void initializations()
+    protected override void Initializations()
     {
         #region Finding (Static) Mines
         Mine[] Mines = RecordKeeper.Instance.GetMines().ToArray();
@@ -30,10 +30,10 @@ public class Miner : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == statusTypes.Undefined)
-            status = statusTypes.Active;
-        if (status == statusTypes.Dead)
-            status = statusTypes.Active;
+        if (status == StatusTypes.Undefined)
+            status = StatusTypes.Active;
+        if (status == StatusTypes.Dead)
+            status = StatusTypes.Active;
         SetWaypoints();
         if (isIdleTarget)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
@@ -42,15 +42,15 @@ public class Miner : Person
     }
     public override void Sleep(bool forever)
     {
-        status = forever ? statusTypes.Dead : statusTypes.Asleep;
+        status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         animations.Stop();
         if (forever)
         {
             animations.Play("Death");
-            if (currentTarget.GetComponent<Building>())
-                currentTarget.GetComponent<Building>().RemoveOccupation();
-            else if (currentTarget.GetComponent<IdlePoint>())
-                currentTarget.GetComponent<IdlePoint>().freeSpot();
+            if (CurrentTarget.GetComponent<Building>())
+                CurrentTarget.GetComponent<Building>().RemoveOccupation();
+            else if (CurrentTarget.GetComponent<IdlePoint>())
+                CurrentTarget.GetComponent<IdlePoint>().FreeSpot();
         }
         StopAllCoroutines();
         agent.SetDestination(gameObject.transform.position);
@@ -59,7 +59,7 @@ public class Miner : Person
 
     public override void WakeUp()
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
         if (targetIndex == -1)
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
@@ -74,7 +74,7 @@ public class Miner : Person
         for (int i = 0; i < wayPointTargets.Count; i++)
         {
             GameObject mine = wayPointTargets[i];
-            if (mine != null && (currentTarget == null || mine.name != currentTarget.name) && mine.GetComponent<Mine>().occupied == false)
+            if (mine != null && (CurrentTarget == null || mine.name != CurrentTarget.name) && mine.GetComponent<Mine>().occupied == false)
             {
                 possibleTargets.Add(mine);
                 possibleTargetsPos.Add(wayPoints[i]);
@@ -113,7 +113,7 @@ public class Miner : Person
         targetIndex = wayPointTargets.IndexOf(possibleTargets[targetIndex]);
 
         if (isIdleTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().freeSpot();
+            CurrentTarget.GetComponentInParent<IdlePoint>().FreeSpot();
         isIdleTarget = false;
 
         if (wayPointTargets[targetIndex] == null)
@@ -127,15 +127,15 @@ public class Miner : Person
 
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == statusTypes.Dead)
+        if (status == StatusTypes.Dead)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
-        currentTarget = waypointTarget;
+        CurrentTarget = waypointTarget;
         if (isIdleTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().claimSpot();
+            CurrentTarget.GetComponentInParent<IdlePoint>().ClaimSpot();
         else
-            currentTarget.GetComponent<Building>().GetOccupiedBy(gameObject);
+            CurrentTarget.GetComponent<Building>().GetOccupiedBy(gameObject);
         StartCoroutine(navigateToPosition());
 
     }
@@ -152,23 +152,23 @@ public class Miner : Person
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             Incarnate();
-            if (currentTarget.GetComponent<Building>())
-                currentTarget.GetComponent<Building>().RemoveOccupation();
+            if (CurrentTarget.GetComponent<Building>())
+                CurrentTarget.GetComponent<Building>().RemoveOccupation();
         }
-        else if (status != statusTypes.Dead)
+        else if (status != StatusTypes.Dead)
         {
             if (isIdleTarget)
             {
-                status = statusTypes.Idle;
+                status = StatusTypes.Idle;
                 animations.Play("Idle");
                 yield return new WaitForSeconds(2.5f);
                 Incarnate();
             }
             else
             {
-                status = statusTypes.Immune;
+                status = StatusTypes.Immune;
                 animations.Play("Mine1/Attack1");
-                UseAbility(currentTarget);
+                UseAbility(CurrentTarget);
             }
         }
 
@@ -189,7 +189,7 @@ public class Miner : Person
 
     protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
 
         if (target.GetComponent<Building>())
         {
@@ -224,10 +224,10 @@ public class Miner : Person
         else
         {
             Investor investor = target.GetComponent<Investor>();
-            if (investor.Money - investor.baseMoney < Income)
+            if (investor.Money - investor.BaseMoney < Income)
             {
-                Money += investor.Money - investor.baseMoney;
-                investor.Money = investor.baseMoney;
+                Money += investor.Money - investor.BaseMoney;
+                investor.Money = investor.BaseMoney;
             }
             else
             {

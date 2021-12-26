@@ -9,7 +9,7 @@ public class Police : Person
     GameObject prison, prisonWaypoint;
     Prison prisonScript;
 
-    protected override void initializations()
+    protected override void Initializations()
     {
         #region Finding House Objects (why? its funny)
         House[] Houses = RecordKeeper.Instance.GetHouses().ToArray(); 
@@ -33,15 +33,15 @@ public class Police : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == statusTypes.Undefined)
-            status = statusTypes.Immune;
+        if (status == StatusTypes.Undefined)
+            status = StatusTypes.Immune;
         SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
     }
 
     public override void Sleep(bool forever)
     {
-        status = forever ? statusTypes.Dead : statusTypes.Asleep;
+        status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         animations.Stop();
         if (forever)
         {
@@ -55,7 +55,7 @@ public class Police : Person
 
     public override void WakeUp()
     {
-        status = statusTypes.Immune;
+        status = StatusTypes.Immune;
         if (targetIndex == -1)
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
@@ -68,11 +68,11 @@ public class Police : Person
     }
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == statusTypes.Dead || status == statusTypes.Asleep)
+        if (status == StatusTypes.Dead || status == StatusTypes.Asleep)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
-        currentTarget = waypointTarget;
+        CurrentTarget = waypointTarget;
         StartCoroutine(navigateToPosition());
     }
 
@@ -94,30 +94,30 @@ public class Police : Person
         if (other.tag == "Theif" || other.tag == "Briber" || other.tag == "Assassin")
             UseAbility(other.gameObject);
     }
-    public void getBribed()
+    public void GetBribed()
     {
         StopAllCoroutines();
         Incarnate();
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
     {
-        if (target.GetComponent<Person>().getStatus() != statusTypes.Active && target.GetComponent<Person>().getStatus() != statusTypes.Idle)
+        if (target.GetComponent<Person>().GetStatus() != StatusTypes.Active && target.GetComponent<Person>().GetStatus() != StatusTypes.Idle)
             return;
 
         StopAllCoroutines();
 
         agent.SetDestination(target.transform.position);
         animations.Play("Run");
-        currentTarget = target;
+        CurrentTarget = target;
 
-        if (target.GetComponent<Assassin>() && target.GetComponent<Assassin>().getStatus() != statusTypes.Dead)
+        if (target.GetComponent<Assassin>() && target.GetComponent<Assassin>().GetStatus() != StatusTypes.Dead)
             target.GetComponent<Assassin>().SpottedByPolice();
-        else if (target.GetComponent<Theif>() && target.GetComponent<Theif>().getStatus() != statusTypes.Dead)
+        else if (target.GetComponent<Theif>() && target.GetComponent<Theif>().GetStatus() != StatusTypes.Dead)
             target.GetComponent<Theif>().SpottedByPolice();
 
-        StartCoroutine(arrestTheCriminal(target, reincarnate));
+        StartCoroutine(ArrestTheCriminal(target, reincarnate));
     }
-    IEnumerator arrestTheCriminal(GameObject target, bool incarnate = true)
+    IEnumerator ArrestTheCriminal(GameObject target, bool incarnate = true)
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();
@@ -127,7 +127,7 @@ public class Police : Person
 
         agent.SetDestination(prisonWaypoint.transform.position);
         animations.Play("Run");
-        currentTarget = target;
+        CurrentTarget = target;
 
         if (target.GetComponent<Assassin>())
             target.GetComponent<Assassin>().InteractWithPolice(this, prisonWaypoint.transform.position);
@@ -139,9 +139,9 @@ public class Police : Person
         else if (target.GetComponent<Theif>())
             prisonScript.QueueTheifSpawn();
 
-        StartCoroutine(moveTowardsPrison(target,incarnate));
+        StartCoroutine(MoveTowardsPrison(target,incarnate));
     }
-    IEnumerator moveTowardsPrison(GameObject target, bool incarnate = true)
+    IEnumerator MoveTowardsPrison(GameObject target, bool incarnate = true)
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();

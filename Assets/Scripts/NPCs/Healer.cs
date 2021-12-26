@@ -8,14 +8,14 @@ public class Healer : Person
 {
     
 
-    protected override void initializations()
+    protected override void Initializations()
     {
         //Do Nothing?
     }
 
     public void AnnounceDead(GameObject target)
     {
-        if (target == gameObject || status == statusTypes.Dead)
+        if (target == gameObject || status == StatusTypes.Dead)
             return;
         wayPoints.Add(target.transform.position);
         wayPointTargets.Add(target);
@@ -25,10 +25,10 @@ public class Healer : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == statusTypes.Undefined)
-            status = statusTypes.Active;
-        if (status == statusTypes.Dead)
-            status = statusTypes.Active;
+        if (status == StatusTypes.Undefined)
+            status = StatusTypes.Active;
+        if (status == StatusTypes.Dead)
+            status = StatusTypes.Active;
         SetWaypoints();
 
         if (isIdleTarget && idlePointTargets[targetIndex] != null)
@@ -41,7 +41,7 @@ public class Healer : Person
 
     public override void Sleep(bool forever)
     {
-        status = forever ? statusTypes.Dead : statusTypes.Asleep;
+        status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         animations.Stop();
         if (forever)
         {
@@ -56,7 +56,7 @@ public class Healer : Person
 
     public override void WakeUp()
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
         if (targetIndex < 0 || (isIdleTarget && targetIndex >= wayPointTargets.Count))
             SetWaypoints();
         if (isIdleTarget && idlePointTargets[targetIndex] != null)
@@ -99,7 +99,7 @@ public class Healer : Person
         targetIndex = Random.Range(0, wayPointTargets.Count - 1);
 
         if (isIdleTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().freeSpot();
+            CurrentTarget.GetComponentInParent<IdlePoint>().FreeSpot();
         isIdleTarget = false;
 
         if (wayPointTargets[targetIndex] == null)
@@ -113,21 +113,21 @@ public class Healer : Person
 
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == statusTypes.Dead)
+        if (status == StatusTypes.Dead)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
-        currentTarget = waypointTarget;
-        if (isIdleTarget && currentTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().claimSpot();
-        else if (!currentTarget && status != statusTypes.Asleep)
+        CurrentTarget = waypointTarget;
+        if (isIdleTarget && CurrentTarget)
+            CurrentTarget.GetComponentInParent<IdlePoint>().ClaimSpot();
+        else if (!CurrentTarget && status != StatusTypes.Asleep)
         {
             Incarnate();
             return;
         }
-        StartCoroutine(navigateToPosition());
+        StartCoroutine(NavigateToPosition());
     }
-    IEnumerator navigateToPosition()
+    IEnumerator NavigateToPosition()
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();
@@ -139,7 +139,7 @@ public class Healer : Person
 
         if (isIdleTarget)
         {
-            status = statusTypes.Idle;
+            status = StatusTypes.Idle;
             animations.Play("Idle");
             yield return new WaitForSeconds(2.5f);
         }
@@ -153,13 +153,13 @@ public class Healer : Person
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
     {
-        if (target.GetComponent<Person>().getStatus() != statusTypes.Dead)
+        if (target.GetComponent<Person>().GetStatus() != StatusTypes.Dead)
             return;
-        StartCoroutine(reviveTarget(target.gameObject, reincarnate));
+        StartCoroutine(ReviveTarget(target.gameObject, reincarnate));
         if (reincarnate)
             Incarnate();
     }
-    IEnumerator reviveTarget(GameObject target, bool reincarnate)
+    IEnumerator ReviveTarget(GameObject target, bool reincarnate)
     {
         if (target.GetComponent<Person>())
         {
@@ -184,7 +184,7 @@ public class Healer : Person
     }
     protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
 
         if (target.GetComponent<Building>())
         {
@@ -217,10 +217,10 @@ public class Healer : Person
         else
         {
             Investor investor = target.GetComponent<Investor>();
-            if (investor.Money - investor.baseMoney < Income)
+            if (investor.Money - investor.BaseMoney < Income)
             {
-                Money += investor.Money - investor.baseMoney;
-                investor.Money = investor.baseMoney;
+                Money += investor.Money - investor.BaseMoney;
+                investor.Money = investor.BaseMoney;
             }
             else
             {

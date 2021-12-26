@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mars.Tools
 {
-    public enum statusTypes
+    public enum StatusTypes
     {
         Undefined, Idle, Active, Immune, Dead, Asleep
     }

@@ -9,7 +9,7 @@ public class Prison : Building
     private void Update()
     {
     }
-    public override void destroyBuilding()
+    public override void DestroyBuilding()
     {
         //TODO: Add Animations for this
         Destroy(gameObject);
@@ -27,20 +27,20 @@ public class Prison : Building
     }
     public void QueueTheifSpawn()
     {
-        StartCoroutine(spawnTheif());
+        StartCoroutine(SpawnTheif());
     }
     public void QueueAssassinSpawn()
     {
-        StartCoroutine(spawnAssassin());
+        StartCoroutine(SpawnAssassin());
     }
-    IEnumerator spawnTheif()
+    IEnumerator SpawnTheif()
     {
         yield return new WaitForSeconds(60f);
         GameObject newTheif = Instantiate(TheifPrefab, NPCParent.transform) as GameObject;
         yield return new WaitForSeconds(0.2f); //This could have been WaitForEndOfFrame()
         newTheif.GetComponent<Theif>().Incarnate();
     }
-    IEnumerator spawnAssassin()
+    IEnumerator SpawnAssassin()
     {
         yield return new WaitForSeconds(60f);
         GameObject newTheif = Instantiate(AssassinPrefab, NPCParent.transform) as GameObject;

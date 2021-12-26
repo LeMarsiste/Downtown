@@ -12,7 +12,7 @@ public class Theif : Person
 
     bool caughtByPolice = false;
 
-    protected override void initializations()
+    protected override void Initializations()
     {
         #region Finding (Static) Houses
         House[] Houses = RecordKeeper.Instance.GetHouses().ToArray();
@@ -35,10 +35,10 @@ public class Theif : Person
     public override void Incarnate()
     {
         StopAllCoroutines();
-        if (status == statusTypes.Undefined)
-            status = statusTypes.Active;
-        if (status == statusTypes.Dead)
-            status = statusTypes.Active;
+        if (status == StatusTypes.Undefined)
+            status = StatusTypes.Active;
+        if (status == StatusTypes.Dead)
+            status = StatusTypes.Active;
         SetWaypoints();
         if (isIdleTarget)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
@@ -48,23 +48,23 @@ public class Theif : Person
 
     public override void Sleep(bool forever)
     {
-        status = forever ? statusTypes.Dead : statusTypes.Asleep;
+        status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         animations.Stop();
         agent.SetDestination(gameObject.transform.position);
         if (forever)
         {
             animations.Play("Death");
-            if (currentTarget.GetComponent<Building>())
-                currentTarget.GetComponent<Building>().RemoveOccupation();
-            else if (currentTarget.GetComponent<IdlePoint>())
-                currentTarget.GetComponent<IdlePoint>().freeSpot();
+            if (CurrentTarget.GetComponent<Building>())
+                CurrentTarget.GetComponent<Building>().RemoveOccupation();
+            else if (CurrentTarget.GetComponent<IdlePoint>())
+                CurrentTarget.GetComponent<IdlePoint>().FreeSpot();
         }
         StopAllCoroutines();
     }
 
     public override void WakeUp()
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
         if (targetIndex == -1)
             SetWaypoints();
         if (isIdleTarget)
@@ -81,7 +81,7 @@ public class Theif : Person
         for (int i = 0; i < wayPointTargets.Count; i++)
         {
             GameObject House = wayPointTargets[i];
-            if (House != null && (currentTarget == null || House.name != currentTarget.name) && House.GetComponent<House>().occupied == false)
+            if (House != null && (CurrentTarget == null || House.name != CurrentTarget.name) && House.GetComponent<House>().occupied == false)
             {
                 possibleTargets.Add(House);
                 possibleTargetsPos.Add(wayPoints[i]);
@@ -120,7 +120,7 @@ public class Theif : Person
         targetIndex = wayPointTargets.IndexOf(possibleTargets[targetIndex]);
 
         if (isIdleTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().freeSpot();
+            CurrentTarget.GetComponentInParent<IdlePoint>().FreeSpot();
         isIdleTarget = false;
 
         if (wayPointTargets[targetIndex] == null)
@@ -134,25 +134,25 @@ public class Theif : Person
 
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
-        if (status == statusTypes.Dead || status == statusTypes.Asleep)
+        if (status == StatusTypes.Dead || status == StatusTypes.Asleep)
             return;
         agent.SetDestination(waypointPos);
         animations.Play("Run");
-        currentTarget = waypointTarget;
+        CurrentTarget = waypointTarget;
 
-        if (isIdleTarget && currentTarget)
-            currentTarget.GetComponentInParent<IdlePoint>().claimSpot();
-        else if (!isIdleTarget && currentTarget)
-            currentTarget.GetComponent<Building>().GetOccupiedBy(gameObject);
-        else if (!currentTarget && status != statusTypes.Asleep)
+        if (isIdleTarget && CurrentTarget)
+            CurrentTarget.GetComponentInParent<IdlePoint>().ClaimSpot();
+        else if (!isIdleTarget && CurrentTarget)
+            CurrentTarget.GetComponent<Building>().GetOccupiedBy(gameObject);
+        else if (!CurrentTarget && status != StatusTypes.Asleep)
         {
             Incarnate();
             return;
         }
-        StartCoroutine(navigateToPosition());
+        StartCoroutine(NavigateToPosition());
 
     }
-    IEnumerator navigateToPosition()
+    IEnumerator NavigateToPosition()
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();
@@ -163,24 +163,24 @@ public class Theif : Person
         if (agent.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             Incarnate();
-            if (currentTarget.GetComponent<Building>())
-                currentTarget.GetComponent<Building>().RemoveOccupation();
+            if (CurrentTarget.GetComponent<Building>())
+                CurrentTarget.GetComponent<Building>().RemoveOccupation();
         }
 
-        else if (status != statusTypes.Dead)
+        else if (status != StatusTypes.Dead)
         {
             if (isIdleTarget)
             {
-                status = statusTypes.Idle;
+                status = StatusTypes.Idle;
                 animations.Play("Idle");
                 yield return new WaitForSeconds(2.5f);
                 Incarnate();
             }
             else
             {
-                status = statusTypes.Immune;
+                status = StatusTypes.Immune;
                 animations.Play("Gather");
-                UseAbility(currentTarget);
+                UseAbility(CurrentTarget);
             }
         }
 
@@ -188,15 +188,15 @@ public class Theif : Person
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Person>() && other.GetComponent<Person>().getStatus() == statusTypes.Active && !caughtByPolice)
+        if (other.GetComponent<Person>() && other.GetComponent<Person>().GetStatus() == StatusTypes.Active && !caughtByPolice)
             UseAbility(other.gameObject, false);
     }
     protected override void UseAbility(GameObject target, bool reincarnate = true)
     {
-        StartCoroutine(stealFrom(target, reincarnate));
+        StartCoroutine(StealFrom(target, reincarnate));
     }
 
-    IEnumerator stealFrom(GameObject target, bool incarnate = true)
+    IEnumerator StealFrom(GameObject target, bool incarnate = true)
     {
         if (target.GetComponent<House>())
         {
@@ -212,7 +212,7 @@ public class Theif : Person
 
     protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
     {
-        status = statusTypes.Active;
+        status = StatusTypes.Active;
 
         if (target.GetComponent<Building>())
         {
@@ -247,10 +247,10 @@ public class Theif : Person
         else
         {
             Investor investor = target.GetComponent<Investor>();
-            if (investor.Money - investor.baseMoney < Income)
+            if (investor.Money - investor.BaseMoney < Income)
             {
-                Money += investor.Money - investor.baseMoney;
-                investor.Money = investor.baseMoney;
+                Money += investor.Money - investor.BaseMoney;
+                investor.Money = investor.BaseMoney;
             }
             else
             {
@@ -267,7 +267,7 @@ public class Theif : Person
     public void SpottedByPolice()
     {
         gameObject.tag = "Imprisoned";
-        status = statusTypes.Immune;
+        status = StatusTypes.Immune;
         StopAllCoroutines();
         animations.Play("Talk");
         agent.SetDestination(gameObject.transform.position);
@@ -276,27 +276,27 @@ public class Theif : Person
     {
         if (IsBriberTheif && Money >= BribeMoney)
         {
-            policeScript.getBribed();
+            policeScript.GetBribed();
             policeScript.Money += BribeMoney;
             Money -= BribeMoney;
-            StartCoroutine(camoflauge());
-            status = statusTypes.Active;
+            StartCoroutine(Camoflauge());
+            status = StatusTypes.Active;
         }
         else
         {
             animations.Play("WalkFront");
             agent.SetDestination(prisonPos);
-            StartCoroutine(goToPrison());
+            StartCoroutine(GoToPrison());
         }
     }
-    IEnumerator camoflauge()
+    IEnumerator Camoflauge()
     {
         gameObject.tag = "Worker";
         yield return new WaitForSeconds(15f);
         gameObject.tag = IsBriberTheif ? "Briber" : "Theif";
         Incarnate();
     }
-    IEnumerator goToPrison()
+    IEnumerator GoToPrison()
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();
