@@ -23,7 +23,7 @@ public class Police : Person
         #endregion
 
         prison = RecordKeeper.Instance.GetPrisons()[0].gameObject;
-        prisonWaypoint = prison.transform.Find("Waypoint Portal").gameObject;
+        prisonWaypoint = prison.GetComponent<Prison>().WaypointPortal;
         prisonScript = prison.GetComponent<Prison>();
 
         wayPoints.Add(prisonWaypoint.transform.position);

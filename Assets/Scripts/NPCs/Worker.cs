@@ -15,8 +15,8 @@ public class Worker : Person
         {
             GameObject house = houseScript.gameObject;
             wayPointTargets.Add(house);
-            if (house.transform.Find("Waypoint Portal"))
-                wayPoints.Add(house.transform.Find("Waypoint Portal").position);
+            if (houseScript.WaypointPortal != null)
+                wayPoints.Add(houseScript.WaypointPortal.transform.position);
             else
                 wayPoints.Add(house.transform.position);
         }
@@ -63,7 +63,7 @@ public class Worker : Person
         for (int i = 0; i < wayPointTargets.Count; i++)
         {
             GameObject House = wayPointTargets[i];
-            if (House != null && (CurrentTarget == null || House.name != CurrentTarget.name) && House.GetComponent<House>().occupied == false)
+            if (House != null && (CurrentTarget == null || House.name != CurrentTarget.name) && House.GetComponent<House>().Occupied == false)
             {
                 possibleTargets.Add(House);
                 possibleTargetsPos.Add(wayPoints[i]);

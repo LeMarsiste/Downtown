@@ -18,8 +18,8 @@ public class Miner : Person
             GameObject mine = mineScript.gameObject;
 
             wayPointTargets.Add(mine);
-            if (mine.transform.Find("Waypoint Portal"))
-                wayPoints.Add(mine.transform.Find("Waypoint Portal").position);
+            if (mineScript.WaypointPortal != null)
+                wayPoints.Add(mineScript.WaypointPortal.transform.position);
             else
                 wayPoints.Add(mine.transform.position);
         }
@@ -63,7 +63,7 @@ public class Miner : Person
         for (int i = 0; i < wayPointTargets.Count; i++)
         {
             GameObject mine = wayPointTargets[i];
-            if (mine != null && (CurrentTarget == null || mine.name != CurrentTarget.name) && mine.GetComponent<Mine>().occupied == false)
+            if (mine != null && (CurrentTarget == null || mine.name != CurrentTarget.name) && mine.GetComponent<Mine>().Occupied == false)
             {
                 possibleTargets.Add(mine);
                 possibleTargetsPos.Add(wayPoints[i]);

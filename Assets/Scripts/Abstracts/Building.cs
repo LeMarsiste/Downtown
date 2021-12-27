@@ -4,17 +4,17 @@ using UnityEngine;
 
 public abstract class Building : MonoBehaviour
 {
-    public int money;
-    public bool occupied;
-    public GameObject interactedNPC;
-
+    public int Money;
+    public bool Occupied;
+    public GameObject InteractedNPC;
+    public GameObject WaypointPortal;
     protected virtual void Awake()
     {
         RecordKeeper.Instance.AddEntity(gameObject);
     }
     protected virtual void Update()
     {
-        if (money == 0)
+        if (Money == 0)
             DestroyBuilding();
     }
     public virtual void DestroyBuilding()
@@ -24,11 +24,11 @@ public abstract class Building : MonoBehaviour
     }
     public virtual void GetOccupiedBy(GameObject target)
     {
-        interactedNPC = target;
-        occupied = true;
+        InteractedNPC = target;
+        Occupied = true;
     }
     public virtual void RemoveOccupation()
     {
-        occupied = false;
+        Occupied = false;
     }
 }

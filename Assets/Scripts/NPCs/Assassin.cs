@@ -43,9 +43,11 @@ public class Assassin : Person
         wayPointTargets = new List<GameObject>();
         
 
-        Person[] NPCs = FindObjectsOfType<Person>();
-        foreach (Person npc in NPCs)
+        GameObject[] NPCs = RecordKeeper.Instance.GetNPCs().ToArray();
+        foreach (GameObject npcObject in NPCs)
         {
+            Person npc = npcObject.GetComponent<Person>();
+
             if (npc.gameObject != gameObject && npc.GetStatus() == StatusTypes.Active)
             {
                 wayPointTargets.Add(npc.gameObject);
@@ -64,14 +66,14 @@ public class Assassin : Person
 
             isIdleTarget = true;
 
-            GameObject[] idleSpots = GameObject.FindGameObjectsWithTag("Environment");
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
             targetIndex = 0;
 
-            foreach (GameObject spot in idleSpots)
+            foreach (IdlePoint spot in idleSpots)
             {
-                if (spot.GetComponentInParent<IdlePoint>() && spot.GetComponentInParent<IdlePoint>().occupied == false)
+                if ( spot.GetComponentInParent<IdlePoint>().occupied == false)
                 {
-                    idlePointTargets.Add(spot);
+                    idlePointTargets.Add(spot.gameObject);
                     idlePoints.Add(spot.transform.position);
                     return;
 

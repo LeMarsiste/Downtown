@@ -75,15 +75,15 @@ public abstract class Person : MonoBehaviour
         {
 
             Building building = target.GetComponent<Building>();
-            if (building.money < Income)
+            if (building.Money < Income)
             {
-                Money += building.money;
-                building.money = 0;
+                Money += building.Money;
+                building.Money = 0;
             }
             else
             {
                 Money += Income;
-                building.money -= Income;
+                building.Money -= Income;
             }
             building.RemoveOccupation();
         }
