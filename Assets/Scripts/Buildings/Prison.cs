@@ -6,24 +6,9 @@ public class Prison : Building
 {
     public GameObject TheifPrefab, AssassinPrefab;
     public GameObject NPCParent;
-    private void Update()
+    protected override void Update()
     {
-    }
-    public override void DestroyBuilding()
-    {
-        //TODO: Add Animations for this
-        Destroy(gameObject);
-    }
-
-    public override void GetOccupiedBy(GameObject target)
-    {
-        interactedNPC = target;
-        occupied = true;
-    }
-
-    public override void RemoveOccupation()
-    {
-        occupied = false;
+        //overriden to prevent this object from being removed if gold reached 0
     }
     public void QueueTheifSpawn()
     {

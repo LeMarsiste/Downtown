@@ -12,9 +12,23 @@ public abstract class Building : MonoBehaviour
     {
         RecordKeeper.Instance.AddEntity(gameObject);
     }
-
-    public abstract void DestroyBuilding();
-    public abstract void RemoveOccupation();
-    public abstract void GetOccupiedBy(GameObject target);
-    
+    protected virtual void Update()
+    {
+        if (money == 0)
+            DestroyBuilding();
+    }
+    public virtual void DestroyBuilding()
+    {
+        //TODO: Add Animations for this
+        Destroy(gameObject);
+    }
+    public virtual void GetOccupiedBy(GameObject target)
+    {
+        interactedNPC = target;
+        occupied = true;
+    }
+    public virtual void RemoveOccupation()
+    {
+        occupied = false;
+    }
 }
