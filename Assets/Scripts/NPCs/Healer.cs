@@ -6,7 +6,7 @@ using Mars.Tools;
 
 public class Healer : Person
 {
-    
+
 
     protected override void Initializations()
     {
@@ -43,7 +43,7 @@ public class Healer : Person
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
         //animations.Stop();
-        
+
         if (forever)
         {
             animations.Play("Death");
@@ -117,7 +117,8 @@ public class Healer : Person
         if (status == StatusTypes.Dead)
             return;
         agent.SetDestination(waypointPos);
-        animations.Play("Run");
+        if (waypointTarget != CurrentTarget)
+            animations.Play("Run");
         CurrentTarget = waypointTarget;
         if (isIdleTarget && CurrentTarget)
             CurrentTarget.GetComponentInParent<IdlePoint>().ClaimSpot();
@@ -183,56 +184,10 @@ public class Healer : Person
         if (reincarnate)
             Incarnate();
     }
-    protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
-    {
-        status = StatusTypes.Active;
-
-        if (target.GetComponent<Building>())
-        {
-            Building building = target.GetComponent<Building>();
-            if (building.money < Income)
-            {
-                Money += building.money;
-                building.money = 0;
-            }
-            else
-            {
-                Money += Income;
-                building.money -= Income;
-            }
-        }
-        else if (!target.GetComponent<Investor>())
-        {
-            Person npc = target.GetComponent<Person>();
-            if (npc.Money < Income)
-            {
-                Money += npc.Money;
-                npc.Money = 0;
-            }
-            else
-            {
-                Money += Income;
-                npc.Money -= Income;
-            }
-        }
-        else
-        {
-            Investor investor = target.GetComponent<Investor>();
-            if (investor.Money - investor.BaseMoney < Income)
-            {
-                Money += investor.Money - investor.BaseMoney;
-                investor.Money = investor.BaseMoney;
-            }
-            else
-            {
-                Money += Income;
-                investor.Money -= Income;
-            }
-        }
-
-    }
-
-
-
 
 }
+
+
+
+
+

@@ -73,9 +73,6 @@ public class Investor : Person
     {
         //Does Nothing, Violation of SOLID (maybe we should change the definition of Person in docs?)
     }
-    protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
-    {
-        //Does Nothing, Violation of SOLID (maybe we should change the definition of Person in docs?)
-    }
+    
     #endregion
 }

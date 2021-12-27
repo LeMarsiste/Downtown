@@ -17,19 +17,7 @@ public class Assassin : Person
         #endregion
     }
 
-    public override void Incarnate()
-    {
-        StopAllCoroutines();
-        if (status == StatusTypes.Undefined)
-            status = StatusTypes.Active;
-        if (status == StatusTypes.Dead)
-            status = StatusTypes.Active;
-        SetWaypoints();
-        if (isIdleTarget)
-            NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
-        else
-            NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
-    }
+    
 
     public override void Sleep(bool forever)
     {

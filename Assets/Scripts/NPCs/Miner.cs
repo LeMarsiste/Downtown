@@ -27,19 +27,7 @@ public class Miner : Person
 
         Income = Random.Range(10, 15) * 10;
     }
-    public override void Incarnate()
-    {
-        StopAllCoroutines();
-        if (status == StatusTypes.Undefined)
-            status = StatusTypes.Active;
-        if (status == StatusTypes.Dead)
-            status = StatusTypes.Active;
-        SetWaypoints();
-        if (isIdleTarget)
-            NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
-        else
-            NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
-    }
+    
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -188,57 +176,5 @@ public class Miner : Person
         }
     }
 
-    protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
-    {
-        status = StatusTypes.Active;
-
-        if (target.GetComponent<Building>())
-        {
-
-            Building building = target.GetComponent<Building>();
-            if (building.money < Income)
-            {
-                Money += building.money;
-                building.money = 0;
-            }
-            else
-            {
-                Money += Income;
-                building.money -= Income;
-            }
-            building.RemoveOccupation();
-        }
-        else if (!target.GetComponent<Investor>())
-        {
-            Person npc = target.GetComponent<Person>();
-            if (npc.Money < Income)
-            {
-                Money += npc.Money;
-                npc.Money = 0;
-            }
-            else
-            {
-                Money += Income;
-                npc.Money -= Income;
-            }
-        }
-        else
-        {
-            Investor investor = target.GetComponent<Investor>();
-            if (investor.Money - investor.BaseMoney < Income)
-            {
-                Money += investor.Money - investor.BaseMoney;
-                investor.Money = investor.BaseMoney;
-            }
-            else
-            {
-                Money += Income;
-                investor.Money -= Income;
-            }
-        }
-
-        if (reincarnate)
-            Incarnate();
-    }
 
 }

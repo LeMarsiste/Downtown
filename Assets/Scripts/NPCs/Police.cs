@@ -47,7 +47,6 @@ public class Police : Person
         if (forever)
         {
             animations.Play("Death");
-            gameObject.GetComponent<Healer>().enabled = false;
             gameObject.GetComponent<BoxCollider>().enabled = false;
         }
         agent.SetDestination(gameObject.transform.position);
@@ -155,8 +154,5 @@ public class Police : Person
         if (incarnate)
             Incarnate();
     }
-    protected override void RecieveMoneyFrom(GameObject target, bool reincarnate = true)
-    {
-        //doesnt ask for money from anyone ... Violation of SOLID perhaps
-    }
+    
 }
