@@ -8,10 +8,6 @@ public abstract class Building : MonoBehaviour
     public bool Occupied;
     public GameObject InteractedNPC;
     public GameObject WaypointPortal;
-    protected virtual void Awake()
-    {
-        RecordKeeper.Instance.AddEntity(gameObject);
-    }
     protected virtual void Update()
     {
         if (Money == 0)

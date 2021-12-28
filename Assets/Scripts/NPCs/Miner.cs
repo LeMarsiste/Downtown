@@ -7,13 +7,16 @@ using Mars.Tools;
 
 public class Miner : Person
 {
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Miner>(gameObject);
+    }
 
-    
     protected override void Initializations()
     {
         #region Finding (Static) Mines
-        Mine[] Mines = RecordKeeper.Instance.GetMines().ToArray();
-        foreach (Mine mineScript in Mines)
+        Building[] Mines = RecordKeeper.Instance.GetBuildings<Mine>().ToArray();
+        foreach (Building mineScript in Mines)
         {
             GameObject mine = mineScript.gameObject;
 
@@ -27,7 +30,6 @@ public class Miner : Person
 
         Income = Random.Range(10, 15) * 10;
     }
-    
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -45,7 +47,6 @@ public class Miner : Person
         agent.SetDestination(gameObject.transform.position);
 
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Active;
@@ -53,7 +54,6 @@ public class Miner : Person
             SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
     }
-
     protected override void SetWaypoints()
     {
         List<GameObject> possibleTargets = new List<GameObject>();
@@ -74,7 +74,7 @@ public class Miner : Person
         if (possibleTargets.Count == 0)
         {
             isIdleTarget = true;
-            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints<IdlePoint>().ToArray();
             targetIndex = 0;
 
             foreach (IdlePoint spot in idleSpots)
@@ -113,7 +113,6 @@ public class Miner : Person
         }
         #endregion
     }
-
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
         if (status == StatusTypes.Dead)
@@ -128,10 +127,8 @@ public class Miner : Person
         StartCoroutine(navigateToPosition());
 
     }
-    int wtf = 0;
     IEnumerator navigateToPosition()
     {
-        wtf++;
         while (agent.pathPending) //#nav_mesh_is_dumb
             yield return new WaitForEndOfFrame();
 
@@ -166,7 +163,6 @@ public class Miner : Person
     {
         StartCoroutine(startMining(target, reincarnate));
     }
-
     IEnumerator startMining(GameObject target, bool incarnate = true)
     {
         if (target.GetComponent<Mine>())
@@ -175,6 +171,4 @@ public class Miner : Person
             RecieveMoneyFrom(target);
         }
     }
-
-
 }

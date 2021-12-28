@@ -10,6 +10,11 @@ public class Prison : Building
     {
         //overriden to prevent this object from being removed if gold reached 0
     }
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddBuilding<Prison>(gameObject);
+    }
+
     public void QueueTheifSpawn()
     {
         StartCoroutine(SpawnTheif());

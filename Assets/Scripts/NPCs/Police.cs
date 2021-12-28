@@ -9,12 +9,17 @@ public class Police : Person
     GameObject prison, prisonWaypoint;
     Prison prisonScript;
 
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Police>(gameObject);
+    }
+
     protected override void Initializations()
     {
         #region Finding House Objects (why? its funny)
-        House[] Houses = RecordKeeper.Instance.GetHouses().ToArray(); 
+        Building[] Houses = RecordKeeper.Instance.GetBuildings<House>().ToArray(); 
 
-        foreach (House houseScript in Houses)
+        foreach (Building houseScript in Houses)
         {
             GameObject house = houseScript.gameObject;
             wayPointTargets.Add(house);
@@ -22,14 +27,13 @@ public class Police : Person
         }
         #endregion
 
-        prison = RecordKeeper.Instance.GetPrisons()[0].gameObject;
+        prison = RecordKeeper.Instance.GetBuildings<Prison>()[0].gameObject;
         prisonWaypoint = prison.GetComponent<Prison>().WaypointPortal;
         prisonScript = prison.GetComponent<Prison>();
 
         wayPoints.Add(prisonWaypoint.transform.position);
         wayPointTargets.Add(prison);
     }
-
     public override void Incarnate()
     {
         StopAllCoroutines();
@@ -38,7 +42,6 @@ public class Police : Person
         SetWaypoints();
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
     }
-
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -52,7 +55,6 @@ public class Police : Person
         agent.SetDestination(gameObject.transform.position);
         StopAllCoroutines();
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Immune;
@@ -75,7 +77,6 @@ public class Police : Person
         CurrentTarget = waypointTarget;
         StartCoroutine(navigateToPosition());
     }
-
     IEnumerator navigateToPosition()
     {
         while (agent.pathPending) //#nav_mesh_is_dumb
@@ -87,7 +88,6 @@ public class Police : Person
         Incarnate();
 
     }
-
     private void OnTriggerEnter(Collider other)
     {
         // Alternative Solution : using mesh and raycast to simulate a 170 degree arc to simulate the vision range... but that one got buggy 

@@ -7,7 +7,7 @@ public class IdlePoint : MonoBehaviour
     public bool occupied = false;
     protected virtual void Awake()
     {
-        RecordKeeper.Instance.AddEntity(gameObject);
+        RecordKeeper.Instance.AddIdlePoint<IdlePoint>(gameObject);
     }
     public void ClaimSpot()
     {

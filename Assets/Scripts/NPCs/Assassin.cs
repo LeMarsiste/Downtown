@@ -9,16 +9,16 @@ public class Assassin : Person
     List<Person> healers;
 
     bool caughtByPolice = false;
-
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Assassin>(gameObject);
+    }
     protected override void Initializations()
     {
         #region Finding all the healers
-        healers = new List<Person>(RecordKeeper.Instance.GetHealers());
+        healers = new List<Person>(RecordKeeper.Instance.GetPeople<Healer>());
         #endregion
     }
-
-    
-
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -27,7 +27,6 @@ public class Assassin : Person
         //animations.Stop();
         
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Active;
@@ -36,18 +35,15 @@ public class Assassin : Person
         NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
 
     }
-
     protected override void SetWaypoints()
     {
         wayPoints = new List<Vector3>();
         wayPointTargets = new List<GameObject>();
         
 
-        GameObject[] NPCs = RecordKeeper.Instance.GetNPCs().ToArray();
-        foreach (GameObject npcObject in NPCs)
+        Person[] NPCs = RecordKeeper.Instance.GetEveryone().ToArray();
+        foreach (Person npc in NPCs)
         {
-            Person npc = npcObject.GetComponent<Person>();
-
             if (npc.gameObject != gameObject && npc.GetStatus() == StatusTypes.Active)
             {
                 wayPointTargets.Add(npc.gameObject);
@@ -66,7 +62,7 @@ public class Assassin : Person
 
             isIdleTarget = true;
 
-            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints<IdlePoint>().ToArray();
             targetIndex = 0;
 
             foreach (IdlePoint spot in idleSpots)
@@ -104,7 +100,6 @@ public class Assassin : Person
         }
         #endregion
     }
-
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
         agent.SetDestination(waypointPos);
@@ -137,7 +132,6 @@ public class Assassin : Person
             Incarnate();
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Person>() && other.GetComponent<Person>().GetStatus() == StatusTypes.Active && status == StatusTypes.Active && !caughtByPolice)
@@ -207,7 +201,7 @@ public class Assassin : Person
         // Other Possible Implementations:
         /// 1- Adding a place to put the imprisoned NPCs there and add a "escape" mechanic to the game
         ///    we can add the "imprisoned" tag to those units and do the rest (hence the reason I have an "Imprisoned" tag)
-        RecordKeeper.Instance.RemoveEntity(gameObject);
+        RecordKeeper.Instance.RemovePerson<Assassin>(gameObject.GetComponent<Assassin>());
         Destroy(gameObject);
     }
 }

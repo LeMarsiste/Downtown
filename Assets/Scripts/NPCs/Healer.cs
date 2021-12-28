@@ -7,12 +7,14 @@ using Mars.Tools;
 public class Healer : Person
 {
 
-
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Healer>(gameObject);
+    }
     protected override void Initializations()
     {
         //Do Nothing?
     }
-
     public void AnnounceDead(GameObject target)
     {
         if (target == gameObject || status == StatusTypes.Dead)
@@ -21,7 +23,6 @@ public class Healer : Person
         wayPointTargets.Add(target);
         Incarnate();
     }
-
     public override void Incarnate()
     {
         StopAllCoroutines();
@@ -31,14 +32,13 @@ public class Healer : Person
             status = StatusTypes.Active;
         SetWaypoints();
 
-        if (isIdleTarget && idlePointTargets[targetIndex] != null)
+        if (isIdleTarget && idlePointTargets[targetIndex] != null && targetIndex < idlePointTargets.Count)
             NavigateToWaypoint(idlePointTargets[targetIndex], idlePoints[targetIndex]);
-        else if (!isIdleTarget && wayPointTargets[targetIndex] != null)
+        else if (!isIdleTarget && wayPointTargets[targetIndex] != null && targetIndex < wayPointTargets.Count)
             NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
         else
             Incarnate();
     }
-
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -54,7 +54,6 @@ public class Healer : Person
         StopAllCoroutines();
 
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Active;
@@ -73,7 +72,7 @@ public class Healer : Person
         if (wayPoints.Count == 0)
         {
             isIdleTarget = true;
-            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints<IdlePoint>().ToArray();
             targetIndex = 0;
 
             foreach (IdlePoint spot in idleSpots)
@@ -111,7 +110,6 @@ public class Healer : Person
         }
         #endregion
     }
-
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
         if (status == StatusTypes.Dead)

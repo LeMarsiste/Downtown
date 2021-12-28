@@ -24536,7 +24536,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh18276
+  m_Name: pb_Mesh18280
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -30696,9 +30696,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418df0f4bdfd80d4d9c9a043e74fb51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 500
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 500
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 734084658}
 --- !u!1 &380997651 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5cec2d581b0d82444a50dae780e4ec7e, type: 3}
@@ -30737,9 +30738,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418df0f4bdfd80d4d9c9a043e74fb51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 500
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 500
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 1079849219}
 --- !u!1 &390960739
 GameObject:
   m_ObjectHideFlags: 0
@@ -36055,9 +36057,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418df0f4bdfd80d4d9c9a043e74fb51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 500
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 500
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 1986974816}
 --- !u!43 &479498304
 Mesh:
   m_ObjectHideFlags: 0
@@ -39335,9 +39338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb5b2d6c44d1c64fa96e2779d09a0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 1000
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 1000
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 604852922}
 --- !u!1 &625029936
 GameObject:
   m_ObjectHideFlags: 0
@@ -50860,9 +50864,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418df0f4bdfd80d4d9c9a043e74fb51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 500
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 500
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 625029936}
 --- !u!1 &1057205362
 GameObject:
   m_ObjectHideFlags: 0
@@ -70790,9 +70795,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c1ca5a284bbe04fa986d2b2ce81bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 0
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 0
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 1189729832}
   TheifPrefab: {fileID: 6306591838088637013, guid: 5631b0cba9506c74cbb898106940b372, type: 3}
   AssassinPrefab: {fileID: 5781612243625477048, guid: 01fa332d37e6e3045b608c4842154274, type: 3}
   NPCParent: {fileID: 1007000869}
@@ -70959,7 +70965,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh18250
+  m_Name: pb_Mesh18248
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -73668,9 +73674,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb5b2d6c44d1c64fa96e2779d09a0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 1000
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 1000
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 1352564470}
 --- !u!43 &1507354385
 Mesh:
   m_ObjectHideFlags: 0
@@ -102399,9 +102406,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418df0f4bdfd80d4d9c9a043e74fb51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 500
-  occupied: 0
-  interactedNPC: {fileID: 0}
+  Money: 500
+  Occupied: 0
+  InteractedNPC: {fileID: 0}
+  WaypointPortal: {fileID: 1098549863}
 --- !u!1 &2128630048
 GameObject:
   m_ObjectHideFlags: 0

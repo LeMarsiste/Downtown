@@ -20,10 +20,9 @@ public class GameController : MonoBehaviour
     {
         Entries = new List<GameObject>();
 
-        GameObject[] npcs = RecordKeeper.Instance.GetNPCs().ToArray();
-        foreach (GameObject NPC in npcs)
+        Person[] npcs = RecordKeeper.Instance.GetEveryone().ToArray();
+        foreach (Person npc in npcs)
         {
-            Person npc = NPC.GetComponent<Person>();
             Characters.Add(npc);
             GameObject newEntry = Instantiate(EntryPrefab, StatusArea.transform) as GameObject;
             newEntry.transform.Find("Name Text").GetComponent<TextMeshProUGUI>().text = npc.name;
@@ -71,10 +70,9 @@ public class GameController : MonoBehaviour
                 if (child.gameObject != StatusArea)
                     Destroy(child.gameObject);
 
-            GameObject[] npcs = RecordKeeper.Instance.GetNPCs().ToArray();
-            foreach (GameObject NPC in npcs)
+            Person[] npcs = RecordKeeper.Instance.GetEveryone().ToArray();
+            foreach (Person npc in npcs)
             {
-                Person npc = NPC.GetComponent<Person>();
                 GameObject newEntry = Instantiate(EntryPrefab, StatusArea.transform) as GameObject;
                 newEntry.transform.Find("Name Text").GetComponent<TextMeshProUGUI>().text = npc.name;
                 newEntry.transform.Find("Money Text").GetComponent<TextMeshProUGUI>().text = npc.Money.ToString();

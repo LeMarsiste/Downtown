@@ -7,11 +7,16 @@ using Mars.Tools;
 
 public class Worker : Person
 {
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Worker>(gameObject);
+    }
+
     protected override void Initializations()
     {
         #region Finding (Static) Houses
-        House[] Houses = RecordKeeper.Instance.GetHouses().ToArray();
-        foreach (House houseScript in Houses)
+        Building[] Houses = RecordKeeper.Instance.GetBuildings<House>().ToArray();
+        foreach (Building houseScript in Houses)
         {
             GameObject house = houseScript.gameObject;
             wayPointTargets.Add(house);
@@ -22,7 +27,6 @@ public class Worker : Person
         }
         #endregion
     }
-    
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -42,7 +46,6 @@ public class Worker : Person
         agent.SetDestination(gameObject.transform.position);
 
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Active;
@@ -53,7 +56,6 @@ public class Worker : Person
         else
             NavigateToWaypoint(wayPointTargets[targetIndex], wayPoints[targetIndex]);
     }
-
     protected override void SetWaypoints()
     {
         List<GameObject> possibleTargets = new List<GameObject>();
@@ -74,7 +76,7 @@ public class Worker : Person
         if (possibleTargets.Count == 0)
         {
             isIdleTarget = true;
-            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints<IdlePoint>().ToArray();
             targetIndex = 0;
 
             foreach (IdlePoint spot in idleSpots)
@@ -113,7 +115,6 @@ public class Worker : Person
         }
         #endregion
     }
-
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
         if (status == StatusTypes.Dead)
@@ -165,7 +166,6 @@ public class Worker : Person
     {
         StartCoroutine(StartWorking(target, reincarnate));
     }
-
     IEnumerator StartWorking(GameObject target, bool incarnate = true)
     {
         if (target.GetComponent<House>())

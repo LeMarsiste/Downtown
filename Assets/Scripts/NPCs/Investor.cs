@@ -10,23 +10,27 @@ public class Investor : Person
     public int BaseMoney;
     public float ProfitPercentage;
 
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Investor>(gameObject);
+    }
+
     protected override void Initializations()
     {
         Money = Random.Range(0, 200);  //no exact number was specified in the Docs
         ProfitPercentage = Random.Range(0.01f, 0.5f); // no exact number was specified in the Docs
         BaseMoney = Money;
     }
-
     public override void Incarnate()
     {
         StopAllCoroutines();
+        animations.Play("Idle");
         if (status == StatusTypes.Undefined)
             status = StatusTypes.Active;
         if (status == StatusTypes.Dead)
             status = StatusTypes.Active;
         StartCoroutine(Invest());
     }
-
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -37,13 +41,11 @@ public class Investor : Person
         StopAllCoroutines();
         
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Active;
         Incarnate();
     }
-
     IEnumerator Invest()
     {
         while (true)
@@ -73,6 +75,5 @@ public class Investor : Person
     {
         //Does Nothing, Violation of SOLID (maybe we should change the definition of Person in docs?)
     }
-    
     #endregion
 }

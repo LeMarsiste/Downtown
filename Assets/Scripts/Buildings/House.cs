@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class House : Building
 {
-
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddBuilding<House>(gameObject);
+    }
 }

@@ -12,12 +12,17 @@ public class Theif : Person
 
     bool caughtByPolice = false;
 
+    private void Awake()
+    {
+        RecordKeeper.Instance.AddPerson<Theif>(gameObject);
+    }
+
     protected override void Initializations()
     {
         #region Finding (Static) Houses
-        House[] Houses = RecordKeeper.Instance.GetHouses().ToArray();
+        Building[] Houses = RecordKeeper.Instance.GetBuildings<House>().ToArray();
 
-        foreach (House houseScript in Houses)
+        foreach (Building houseScript in Houses)
         {
             GameObject house = houseScript.gameObject;
             wayPointTargets.Add(house);
@@ -32,8 +37,6 @@ public class Theif : Person
         if (IsBriberTheif && BribeMoney == 0)
             BribeMoney = Random.Range(10, 15) * 10;
     }
-    
-
     public override void Sleep(bool forever)
     {
         status = forever ? StatusTypes.Dead : StatusTypes.Asleep;
@@ -50,7 +53,6 @@ public class Theif : Person
         }
         StopAllCoroutines();
     }
-
     public override void WakeUp()
     {
         status = StatusTypes.Active;
@@ -81,7 +83,7 @@ public class Theif : Person
         if (possibleTargets.Count == 0)
         {
             isIdleTarget = true;
-            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints().ToArray();
+            IdlePoint[] idleSpots = RecordKeeper.Instance.GetIdlePoints<IdlePoint>().ToArray();
             targetIndex = 0;
 
             foreach (IdlePoint spot in idleSpots)
@@ -120,7 +122,6 @@ public class Theif : Person
         }
         #endregion
     }
-
     protected override void NavigateToWaypoint(GameObject waypointTarget, Vector3 waypointPos)
     {
         if (status == StatusTypes.Dead || status == StatusTypes.Asleep)
@@ -174,7 +175,6 @@ public class Theif : Person
         }
 
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Person>() && other.GetComponent<Person>().GetStatus() == StatusTypes.Active && !caughtByPolice)
@@ -184,7 +184,6 @@ public class Theif : Person
     {
         StartCoroutine(StealFrom(target, reincarnate));
     }
-
     IEnumerator StealFrom(GameObject target, bool incarnate = true)
     {
         if (target.GetComponent<House>())
@@ -198,8 +197,6 @@ public class Theif : Person
             RecieveMoneyFrom(target, incarnate);
         }
     }
-
-
     public void SpottedByPolice()
     {
         gameObject.tag = "Imprisoned";
@@ -242,7 +239,7 @@ public class Theif : Person
         // Other Possible Implementations:
         /// 1- Adding a place to put the imprisoned NPCs there and add a "escape" mechanic to the game
         ///    we can add the "imprisoned" tag to those units and do the rest (hence the reason I have an "Imprisoned" tag)
-        RecordKeeper.Instance.RemoveEntity(gameObject);
+        RecordKeeper.Instance.RemovePerson<Theif>(gameObject.GetComponent<Theif>());
         Destroy(gameObject);
     }
 

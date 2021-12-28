@@ -21,10 +21,6 @@ public abstract class Person : MonoBehaviour
     protected Vector3 agentsLastVelocity, startingPosition;
 
     public int Money, Income;
-    protected virtual void Awake()
-    {
-        RecordKeeper.Instance.AddEntity(gameObject);
-    }
     protected virtual void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
